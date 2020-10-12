@@ -1,0 +1,4054 @@
+#: import CheckBox kivy.uix.checkbox
+#: import label kivy.uix.label
+	
+#### LABELS AND BUTTONS ####
+<CustLabel@Label>:
+    color: 0, 0, 0, 1
+    text_size: self.size
+    halign: 'right'
+    valign: 'center'
+
+<CustLabel2@Label>:
+    text_size: self.size
+    halign: 'right'
+    valign: 'center'
+ 
+<CustLabel3@Label>:
+    text_size: self.size
+    halign: 'left'
+    valign: 'center'
+    
+<CustLabel4@Label>:
+	text_size: self.size
+	halign: 'left'
+	valign: 'bottom'
+	color: 0,0,0,1
+ 
+<CustomButton@Button>:
+	text_size: self.size
+	halign: 'center'
+	valign: 'center'
+   
+<ScrollCheckBox@CheckBox>:
+	height: 30
+	active: False
+	size_hint_x: .1
+	spacing: 10
+	
+<CustToggleButton@ToggleButton>:
+	height: '40dp'
+	size_hint_y: None
+	 
+<CustTextInput@TextInput>:
+	write_tab: False
+	multiline: False
+	padding: [6, ( self.height - self.line_height ) / 2] 
+	
+<ScrollLabel@Label>:
+	font_size: '15sp'
+	font: 'Roboto'
+	color: 0,0,0,1
+	text_size: self.size
+	halign: 'left'
+	valign: "middle"
+
+    
+<CustImage@Image>:
+    size: self.texture_size
+    allow_stretch: True
+    keep_ratio: True
+    size_hint_y: None
+    size_hint_x: None
+    width: self.parent.width
+    height: self.parent.width/self.image_ratio
+    
+#### POPUP DIALOGS ####
+<ExitDialog>:
+    BoxLayout:
+    	pos: root.pos
+    	orientation: "vertical"
+    	padding: 20, 20, 20, 20
+        spacing: 15
+
+        Label:
+        	text: "Do you really want to exit QuARG?"
+        
+        CustomButton:
+            text: "Cancel"
+            on_release: root.cancel()
+
+        CustomButton:
+            text: "Exit QuARG"
+            on_release: root.do_exit()
+ 
+<OverwriteDialog>:
+    BoxLayout:
+    	pos: root.pos
+    	orientation: "vertical"
+    	padding: 20, 20, 20, 20
+        spacing: 15
+
+        Label:
+        	text: "File already exists. Overwrite?"
+        
+        CustomButton:
+            text: "No"
+            on_release: root.dontDoIt()
+
+        CustomButton:
+            text: "Yes"
+            on_release: root.doIt()
+ 
+<ReportDialog>:
+    BoxLayout:
+    	pos: root.pos
+    	orientation: "vertical"
+    	padding: 20, 20, 20, 20
+        spacing: 15
+
+        Label:
+        	text: "File already exists. Overwrite?"
+        
+        CustomButton:
+            text: "No"
+            on_release: root.a()
+
+        CustomButton:
+            text: "Yes"
+            on_release: root.b()
+ 
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        
+        FileChooserListView:
+            id: filechooser
+            path: "./"
+            
+            
+
+        BoxLayout:
+            size_hint_y: None
+            height: 70
+            CustomButton:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            CustomButton:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
+
+<LoadDialog2>:
+	BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        
+        FileChooserListView:
+            id: filechooser
+            path: "./"
+            dirselect: True
+            
+            
+
+        BoxLayout:
+            size_hint_y: None
+            height: 70
+            CustomButton:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            CustomButton:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
+
+<DeleteDialog>:
+    BoxLayout:
+    	pos: root.pos
+    	orientation: "vertical"
+    	padding: 20, 20, 20, 20
+        spacing: 15
+
+        Label:
+        	text: "Do you really want to delete the ticket?"
+        
+        
+        CustomButton:
+            text: "Yes"
+            on_release: root.deleteit()
+        
+        CustomButton:
+            text: "No"
+            on_release: root.cancel()
+
+
+<notifyPopup>:
+	BoxLayout:
+		pos: root.pos
+    	orientation: "vertical"
+		padding: 20, 20, 20, 20
+		spacing: 15
+
+		Label:
+			text: "Missing Fields"
+        
+		CustomButton:
+            text: "Return"
+            on_release: root.closePopup()
+		
+  
+
+## Instruments in Preference layout (broadband, etc)
+<Preference_Instruments_RV>:
+	viewclass: 'preference_instruments_SelectableLabel'
+	bar_width: dp(10)
+
+	SelectableRecycleBoxLayout:
+        default_size: None, dp(30)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: True
+        touch_multiselect: True
+
+        
+<preference_instruments_SelectableLabel>:
+	manager: None
+	
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (7/255, 173/255, 212/255,1) if self.selected else (100/255, 100/255, 100/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+	#font_name: 'RobotoMono-Regular'
+	#font_size: '14sp'
+	color: 1,1,1,1
+	text_size: self.size
+    halign: 'center'
+    valign: 'middle'
+    
+## ThresholdGroups (Completeness, etc) in Preference Form    
+<Preference_ThresholdGroups_RV>:
+	viewclass: 'preference_thresholdGroups_SelectableLabel'
+	bar_width: dp(10)
+
+	SelectableRecycleBoxLayout:
+        default_size: None, dp(30)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: True
+        touch_multiselect: True
+        
+<preference_thresholdGroups_SelectableLabel>:
+	manager: None
+	
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (7/255, 173/255, 212/255,1) if self.selected else (100/255, 100/255, 100/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+	#font_name: 'RobotoMono-Regular'
+	#font_size: '14sp'
+	color: 1,1,1,1
+	text_size: self.size
+    halign: 'center'
+    valign: 'middle'
+    
+      
+## ThresholdNames (gapsRatioGt12, etc) in thresholdGroups Screen    
+<ThresholdNames_RV>:
+	viewclass: 'thresholdNames_SelectableLabel'
+	bar_width: dp(10)
+
+	SelectableRecycleBoxLayout:
+        default_size: None, dp(30)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: True
+        touch_multiselect: True
+        touch_deselect_last: True
+        
+<thresholdNames_SelectableLabel>:
+	manager: None
+	
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (7/255, 173/255, 212/255,1) if self.selected else (100/255, 100/255, 100/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+	#font_name: 'RobotoMono-Regular'
+	#font_size: '14sp'
+	color: 1,1,1,1
+	text_size: self.size
+    halign: 'center'
+    valign: 'middle'
+       
+       
+ ## Threshold groups  (Completeness, etc) in the thresholdGroups Screen
+<ThresholdGroups_RV>:
+	viewclass: 'thresholdGroups_SelectableLabel'
+	bar_width: dp(10)
+
+	SelectableRecycleBoxLayout:
+        default_size: None, dp(30)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: False
+        touch_multiselect: False
+        touch_deselect_last: True
+        
+<thresholdGroups_SelectableLabel>:
+	manager: None
+	
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (7/255, 173/255, 212/255,1) if self.selected else (100/255, 100/255, 100/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+	#font_name: 'RobotoMono-Regular'
+	#font_size: '14sp'
+	color: 1,1,1,1
+	text_size: self.size
+    halign: 'center'
+    valign: 'middle'
+ 
+ 
+## Threshold GROUPS::NAMES (completeness::gapsRatioGt12, etc) in thresholdGroups Screen    
+<ThresholdGroupAndNames_RV>:
+	viewclass: 'thresholdGroupAndNames_SelectableLabel'
+	bar_width: dp(10)
+
+	SelectableRecycleBoxLayout:
+        default_size: None, dp(30)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: True
+        touch_multiselect: True
+        touch_deselect_last: True
+        
+<thresholdGroupAndNames_SelectableLabel>:
+	manager: None
+	
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (7/255, 173/255, 212/255,1) if self.selected else (100/255, 100/255, 100/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+	#font_name: 'RobotoMono-Regular'
+	#font_size: '14sp'
+	color: 1,1,1,1
+	text_size: self.size
+    halign: 'center'
+    valign: 'middle'
+ 
+ 
+ ## Threshold name list in thresholds layout
+<threshold_names_SelectableLabel>:
+	manager: None
+	
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (7/255, 173/255, 212/255,1) if self.selected else (100/255, 100/255, 100/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+	#font_name: 'RobotoMono-Regular'
+	#font_size: '14sp'
+	color: 1,1,1,1
+	text_size: self.size
+    halign: 'center'
+    valign: 'middle'
+    
+<Threshold_names_RV>:
+    viewclass: 'threshold_names_SelectableLabel'
+    bar_width: dp(10)
+
+    SelectableRecycleBoxLayout:
+        default_size: None, dp(30)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: False
+        touch_multiselect: False
+        touch_deselect_last: True
+
+## Threshold group names in Thresholds Layout
+<Instrument_groups_RV>:
+    viewclass: 'instrument_groups_SelectableLabel'
+    bar_width: dp(10)
+
+    SelectableRecycleBoxLayout:
+        default_size: None, dp(30)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: False
+        touch_multiselect: False
+        touch_deselect_last: True
+
+        
+<instrument_groups_SelectableLabel>:
+
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (7/255, 173/255, 212/255,1) if self.selected else (100/255, 100/255, 100/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+	#font_name: 'RobotoMono-Regular'
+	#font_size: '14sp'
+	color: 1,1,1,1
+	text_size: self.size
+    halign: 'center'
+    valign: 'middle'
+
+
+## Threshold definitions in Thresholds Layout
+<Threshold_definition_RV>:
+    viewclass: 'threshold_definition_SelectableLabel'
+    bar_width: dp(10)
+
+    SelectableRecycleBoxLayout:
+        default_size: None, dp(30)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: False
+        touch_multiselect: False
+        touch_deselect_last: True
+
+        
+<threshold_definition_SelectableLabel>:
+
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (7/255, 173/255, 212/255,1) if self.selected else (1, 1, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+	color: 0,0,0,1
+	text_size: self.size
+    halign: 'left'
+    valign: 'middle'
+
+
+## Metrics RV in Threshold Screen
+<Metrics_List_RV>:
+    viewclass: 'metrics_list_SelectableLabel'
+	bar_width: dp(10)
+
+    SelectableRecycleBoxLayout:
+        default_size: None, dp(30)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: False
+        touch_multiselect: False
+        touch_deselect_last: True
+        
+<metrics_list_SelectableLabel>:
+
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (7/255, 173/255, 212/255,1) if self.selected else (100/255, 100/255, 100/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+	color: (1,1,1,1) if self.disabled==False else (.5,.5,.5,1)
+	text_size: self.size
+    halign: 'center'
+    valign: 'middle'
+
+## Metadata RV in Threshold Screen
+<Metadata_List_RV>:
+    viewclass: 'metadata_list_SelectableLabel'
+    bar_width: dp(10)
+
+    SelectableRecycleBoxLayout:
+        default_size: None, dp(30)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: False
+        touch_multiselect: False
+        touch_deselect_last: True
+        
+<metadata_list_SelectableLabel>:
+	disabled: False	# For the old version of kivy, True was necessary to make the label color disabled on startup. No longer necessary. 
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (7/255, 173/255, 212/255,1) if self.selected else (100/255, 100/255, 100/255, 1)
+        
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+	color:  (.5,.5,.5,1) if self.disabled else (1,1,1,1)
+	text_size: self.size
+    halign: 'center'
+    valign: 'middle'
+
+## Issues Pane 
+<issues_SelectableLabel>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (.3, 0.5, .7, 1) if self.selected else (1, 1, 1, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+	font_name: 'RobotoMono-Regular'
+	font_size: '14sp'
+	color: 0,0,0,1
+	text_size: self.size
+    halign: 'left'
+    valign: 'middle'
+		
+<Issues_RV>:
+    viewclass: 'issues_SelectableLabel'
+    bar_width: dp(10)
+
+    SelectableRecycleBoxLayout:
+        default_size: None, dp(30)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: True
+        touch_multiselect: True
+
+## Selected Tickets RV in SelectedTickets Screen
+<selected_tickets_SelectableLabel>:
+	#manager: None
+	
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            #rgba: (7/255, 173/255, 212/255,1) if self.selected else (100/255, 100/255, 100/255, 1)
+            rgba: (7/255, 173/255, 212/255,1) if self.selected else (.2, .2, .2, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+	font_name: 'RobotoMono-Regular'
+	font_size: '14sp'
+	color: 1,1,1,1
+	text_size: self.size
+    halign: 'left'
+    valign: 'middle'
+    
+
+<Selected_tickets_RV>:
+    viewclass: 'selected_tickets_SelectableLabel'
+
+    SelectableRecycleBoxLayout:
+        default_size: None, dp(30)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: False
+        touch_multiselect: False
+
+
+## Threshold list in New Ticket Screen
+<Create_ticket_thresholds_RV>:
+    viewclass: 'create_ticket_threshold_SelectableLabel'
+
+    SelectableRecycleBoxLayout:
+        default_size: None, dp(30)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: True
+        touch_multiselect: True
+        touch_deselect_last: True
+    
+<create_ticket_threshold_SelectableLabel>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (7/255, 173/255, 212/255,1) if self.selected else (.2, .2, .2, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+	color: 1,1,1,1
+	text_size: self.size
+    halign: 'left'
+    valign: 'middle'
+
+
+## Threshold list in Update Ticket Screen
+<Update_ticket_thresholds_RV>:
+    viewclass: 'update_ticket_threshold_SelectableLabel'
+
+    SelectableRecycleBoxLayout:
+        default_size: None, dp(30)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: True
+        touch_multiselect: True
+        touch_deselect_last: True
+    
+<update_ticket_threshold_SelectableLabel>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (7/255, 173/255, 212/255,1) if self.selected else (.2, .2, .2, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+	color: 1,1,1,1
+	text_size: self.size
+    halign: 'left'
+    valign: 'middle'
+
+
+
+### SCREEN LAYOUTS ####
+<MainScreen>:
+    startDate: start_id
+    endDate: end_id
+    
+    find_pref: pref_id
+    find_directory: dir_id1
+    find_file: file_id
+    find_net: net_id
+    find_sta: sta_id
+    find_loc: loc_id
+    find_cha: chan_id
+    
+    examine_pref: pref_id2
+    examine_directory: dir_id2
+    examine_file: file_id2
+    
+    query_pref: pref_id4
+    query_net: query_net_id
+    query_sta: query_sta_id
+    query_loc: query_loc_id
+    query_cha: query_chan_id
+    query_updated: query_updated_id
+    query_start: query_start_id
+    query_end: query_end_id
+    query_start_before: start_before_id
+    query_end_before: end_before_id
+    query_status_btn2: status_btn2
+    query_tracker_btn2: tracker_btn2
+    query_category_btn2: category_btn2
+    query_updated_before: updated_before_id
+    
+    generate_pref: pref_id3
+    generate_directory: dir_id3
+    generate_file: csv_id
+    generate_net: generate_net_id
+    generate_sta: generate_sta_id
+    generate_loc: generate_loc_id
+    generate_cha: generate_cha_id
+    generate_startDay: generate_start_id
+    generate_endDay: generate_end_id 
+
+	BoxLayout:
+		# MainLayout is a boxLayout, from the python script
+		
+	    orientation: "vertical"
+	    padding: 10
+	    spacing: 10
+	
+		BoxLayout:
+			orientation: "vertical"
+			
+	 
+		    # ---------- Displays Date Information ----------
+		    BoxLayout:
+		        orientation: "horizontal"
+		        size_hint: .75, .08
+		
+				CustLabel:
+					text: 'Start Date:  '
+					id: start_label_id
+					height: self.texture_size[1]
+		
+				TextInput:        
+					id: start_id
+					focus: True
+					text: ''
+					height: start_label_id.texture_size[1]
+		    		multiline: False
+		    		write_tab: False
+		
+				CustLabel:
+					text: 'End Date:  '
+					height: self.texture_size[1]
+					width: self.texture_size[0]
+		
+				TextInput:        
+					id: end_id
+					focus: True
+					text: ""
+					height: start_label_id.texture_size[1]
+		    		multiline: False
+		    		write_tab: False
+	        		
+		        		
+					
+					
+				
+		    # ---------- Displays TabbedPanel ----------
+		    BoxLayout:
+		        orientation: "horizontal"
+		        size_hint: 1, 1
+		       
+		        BoxLayout:
+		            orientation: "vertical"
+		
+		
+					
+		            TabbedPanel:
+		                do_default_tab: False
+		                tab_pos: 'top_left'
+		 
+		 
+		 				###### FIND ISSUE TAB ######
+		                TabbedPanelItem:
+		                    text: "Find Issues"
+		                    text_size: self.size
+		                    height: self.texture_size[1]
+		
+							BoxLayout:
+								padding: 5, 5, 5, 5
+		            			orientation: 'vertical'
+		
+								BoxLayout:
+									padding: 5, 5, 15, 5
+			            			orientation: 'horizontal'
+			
+									BoxLayout:
+				            			padding: 5, 5, 15, 5
+				            			orientation: 'horizontal'
+				            			size_hint_x: .35
+				
+				
+				            			BoxLayout:
+				            				# labels
+				                			spacing: 25
+							                orientation: 'vertical'
+				            			    size_hint_x: 1
+				                			CustLabel2:
+				                    			text: 'Preference File:'
+				                    		CustLabel2:
+				                    			text: 'Directory:'
+				                    		#CustLabel2:
+				                    		#	text: 'Issue File:'
+											CustLabel2:
+				                    			text: 'Network:'
+				                			CustLabel2:
+				                    			text: 'Stations:'
+				                    		CustLabel2:
+				                    			text: 'Locations:'
+				                			CustLabel2:
+				                    			text: 'Channels:'
+			
+			            			BoxLayout:
+			            				# Text inputs
+			                			spacing: 15
+			                			orientation: 'vertical'
+			                			TextInput:
+			                    			text: ''
+			                    			id: pref_id
+			                    			write_tab: False
+			                    			
+			                    		BoxLayout:
+			                    			orientation: 'horizontal'
+			                    			spacing: 15
+			                    			
+			                    			TextInput:
+			                    				size_hint_x: 3
+			                    				write_tab: False
+			                    				id: dir_id1
+			                    			CustomButton:
+			                    				text: "Apply\nChanges"
+			                    				on_release: root.set_directory('Find')
+			                    			CustLabel2:
+			                    				text: "Issue File: "
+			                    			TextInput:
+			                    				size_hint_x: 2
+			                    				id: file_id
+			                    				write_tab: False
+			                    			
+			                    			
+			                    		#TextInput:
+			                    		#	text: ''
+			                    		#	id: file_id
+			                    		#	write_tab: False
+			                			TextInput:
+			                    			text: ''
+			                    			id: net_id
+			                    			write_tab: False
+			                			TextInput:
+			                    			text: ''
+			                    			id: sta_id
+			                    			write_tab: False
+			                    		TextInput:
+			                    			text: ''
+			                    			id: loc_id
+			                    			write_tab: False
+			                			TextInput:
+			                    			text: ''
+			                    			id: chan_id
+			                    			write_tab: False
+			
+			
+									BoxLayout:
+										# Buttons - select file, autofill, and find issues
+			                			spacing: 15
+			                			padding: 15, 2, 0, 0
+			                			orientation: 'vertical'
+			                			
+			                			
+			                			BoxLayout:
+			                				# buttons - select file and autofill
+			                				spacing: 15
+			                				orientation: 'horizontal'
+			                				
+			                				
+			                				
+					            			BoxLayout:
+					            				# buttons - select file
+					                			spacing: 15
+					                			orientation: 'vertical'
+					                			size_hint_x: 0.2
+					                			CustomButton:
+									        		text: 'Browse'
+									        		on_release: root.pref_load()
+									        	CustomButton:
+									        		text: 'Browse'
+									        		on_release: root.file_load()
+									        	Widget:
+									        	Widget:
+									        	Widget:
+									        	Widget:
+									        	
+									        	
+									        	
+									        BoxLayout:
+									        	# buttons - autofill and thresholds 
+					                			spacing: 15
+								                orientation: 'vertical'
+					            			    size_hint_x: .4
+					            			    
+					            			    BoxLayout:
+													orientation: 'horizontal'
+													spacing: 15
+					            			    	
+													CustomButton:
+										        		text: 'Autofill'
+										        		on_release: root.autofill_pref(pref_id.text)
+										        		
+									        		CustomButton:
+									        			text: 'Edit Preference'
+									        			on_release:
+									        				root.manager.previous = root.manager.current
+									        				root.manager.current = 'preferencesScreen'
+								        					root.go_to_preferences()
+									        		
+									        	Widget:
+									        	#CustomButton:
+									        	Widget:
+									        	Widget:
+									        	Widget:
+									        	CustomButton:
+							    					text: "Edit Thresholds"
+							        				on_release: 
+							        					root.manager.previous = root.manager.current
+							        					root.manager.current = 'thresholdsScreen'
+							        					root.go_to_thresholds()
+							        					
+		
+							    BoxLayout:
+					            	# buttons - select file
+					            	#spacing: 15
+					            	orientation: 'vertical'
+									size_hint_y: 0.16
+									        	
+							    	CustomButton:
+							    		text: "Find Issues"
+							        	on_release: root.find_issues()
+							        		
+		            					
+		                			
+		
+		                ###### EXAMINE ISSUE TAB ######        
+		                TabbedPanelItem:
+		                    text: "Examine Issues"
+		                    text_size: self.size
+		                    height: self.texture_size[1]
+	                    
+		                    BoxLayout:
+								padding: 5, 5, 5, 5
+		            			orientation: 'vertical'
+		                    
+			                    BoxLayout:
+									padding: 5, 5, 0, 5
+			            			orientation: 'horizontal'
+			                    
+				                                            
+			                        BoxLayout:
+				            			padding: 5, 5, 15, 5
+				            			orientation: 'horizontal'
+				            			size_hint_x: .35
+				
+				
+				            			BoxLayout:
+				            				# labels
+				                			spacing: 25
+							                orientation: 'vertical'
+				            			    size_hint_x: 1
+				            			    CustLabel2:
+				                    			text: 'Preference File:\n (Optional)       '
+				                			CustLabel2:
+				                    			text: 'Directory:'
+											Widget:
+											Widget:
+											Widget:
+											Widget:
+											
+											
+			
+			            			BoxLayout:
+			            				# Text inputs
+			                			spacing: 15
+			                			orientation: 'vertical'
+			                			TextInput:
+			                    			text: ''
+			                    			id: pref_id2
+			                    			write_tab: False
+			                    			
+			                    		BoxLayout:
+			                    			orientation: 'horizontal'
+			                    			spacing: 15
+			                    			
+			                    			TextInput:
+			                    				size_hint_x: 3
+			                    				write_tab: False
+			                    				id: dir_id2
+			                    			CustomButton:
+			                    				text: "Apply\nChanges"
+			                    				on_release: root.set_directory('Examine')
+			                    			CustLabel2:
+			                    				text: "Issue File: "
+			                    			TextInput:
+			                    				size_hint_x: 2
+			                    				id: file_id2
+			                    				write_tab: False
+			                    				
+			                			#TextInput:
+			                    		#	text: ''
+			                    		#	id: file_id2
+			                    		#	write_tab: False
+			                			Widget:
+			                			Widget:
+			                			Widget:
+			                			Widget:
+			
+			
+									BoxLayout:
+										# Buttons - select file, autofill, and find issues
+			                			spacing: 15
+			                			padding: 15, 2, 15, 0
+			                			orientation: 'vertical'
+			                			
+			                			
+			                			BoxLayout:
+			                				# buttons - select file and autofill
+			                				spacing: 15
+			                				orientation: 'horizontal'
+			                				
+			                				
+			                				
+					            			BoxLayout:
+					            				# buttons - select file
+					                			spacing: 15
+					                			orientation: 'vertical'
+					                			size_hint_x: 0.2
+					                			CustomButton:
+									        		text: 'Browse'
+									        		on_release: root.pref_load()
+					                			CustomButton:
+									        		text: 'Browse'
+									        		on_release: root.file_load()
+									        	Widget:
+									        	Widget:
+									        	Widget:
+									        	Widget:
+									        	
+									        	
+									        	
+									        BoxLayout:
+									        	# buttons - autofill 
+					                			spacing: 15
+								                orientation: 'vertical'
+					            			    size_hint_x: .4
+												CustomButton:
+									        		text: 'Autofill'
+									        		on_release: root.autofill_pref(pref_id2.text)
+												Widget:
+									        	Widget:
+									        	Widget:
+									        	Widget:
+									        	Widget:
+		                    
+								BoxLayout:
+									# buttons - select file
+									spacing: 15
+									orientation: 'vertical'
+									size_hint_y: 0.16
+									        	
+							    	CustomButton:
+							    		text: "Examine Issues"
+							    		#on_press: root.examine_issues()
+							    		
+							        	on_release: 
+							        		root.manager.previous = root.manager.current
+											root.manager.current = 'examineIssuesScreen'
+											root.go_to_examine()
+						        				                    
+							        	
+		 				###### VIEW TICKETS TAB ######
+		                TabbedPanelItem:
+		                	text: "View Tickets"
+		                	text_size: self.size
+		                	height: self.texture_size[1]
+
+		                	BoxLayout:
+		                		orientation: "vertical"
+		                		padding: 5, 5, 5, 5
+		                		
+		                		
+		                		BoxLayout:
+		                			# preference file
+		                			orientation: "horizontal"
+		                			padding: 5
+		                			spacing: 15
+		                			size_hint_y: 0.18
+		                			
+		                			BoxLayout:
+		                				#padding: 5,5,15,5
+		                				size_hint_x: .6
+		                				CustLabel2:
+					                    	text: 'Preference File:\n (Optional)       '
+				                    
+				                    BoxLayout:
+				                    	size_hint_x: 2
+					                    TextInput:
+				                    		text: ''
+				                    		id: pref_id4
+				                    		write_tab: False
+									BoxLayout:
+										CustomButton:
+										    text: 'Browse'
+										    on_release: root.pref_load()
+									BoxLayout:
+										CustomButton:
+										    text: 'Autofill'
+										    on_release: root.autofill_pref(pref_id4.text)
+		                		
+		                		
+			                	BoxLayout:
+			                		padding: 5, 5, 15, 5
+			                		orientation: "horizontal"
+			                		
+		                			
+		                			BoxLayout:
+		                				orientation: "horizontal"
+		                				
+		                				# Left column labels
+		                				BoxLayout:
+		                					padding: 5,0,15,0
+		                					orientation: "vertical"
+		                					
+		                					CustLabel2:
+		                						text: "Network: "
+		                					CustLabel2:
+		                						text: "Stations: "
+		                					CustLabel2:
+		                						text: "Locations: "
+		                					CustLabel2:
+		                						text: "Channels: "
+		                					CustLabel2:
+		                						text: "Updated: "
+	
+	
+		                				
+		                				# Left column inputs
+		                				BoxLayout:
+		                					spacing: 15
+		                					orientation: "vertical"
+		                					size_hint_x: 2
+		                					
+		                					TextInput:
+		                						id: query_net_id
+		                						write_tab: False
+												multiline: False
+											TextInput:
+												id: query_sta_id
+												write_tab: False
+												multiline: False
+											TextInput:
+												id: query_loc_id
+												write_tab: False
+												multiline: False
+											TextInput:
+												id: query_chan_id
+												write_tab: False
+												multiline: False
+											TextInput:
+												id: query_updated_id
+												write_tab: False
+												multiline: False
+	
+	
+		                					
+		                				# checkmark column
+		                				BoxLayout:
+		                					orientation: "vertical"
+		                					size_hint_x: .7
+		                					spacing: 15
+		                					padding: 5, 0, 5, 0
+		                					
+		                					Widget:
+		                					Widget:
+		                					Widget:
+		                					Widget:
+	
+		                					
+		                					# "checkmarks"
+		                					BoxLayout:
+		                						padding: 5,5,5,5
+		                						orientation: 'vertical'
+			                					
+				                				ToggleButton:
+				                					id: updated_before_id
+				                					text: "On/Before"
+				                					state: 'normal'
+				                					group: 'updated'
+				                					
+				                				ToggleButton:
+				                					text: "On/After"
+				                					state: 'down'
+				                					group: 'updated'
+	
+			                			
+	
+			                			
+			                			# Right column labels
+		                				BoxLayout:
+		                					orientation: "vertical"
+		                					padding: 5,0,15,0
+		                					size_hint_x: .5
+		                					
+		                					CustLabel2:
+		                						text: "Status: "
+		                					CustLabel2:
+		                						text: "Tracker: "
+		                					CustLabel2:
+		                						text: "Category: "
+		                					CustLabel2:
+		                						text: "Start Date: "
+		                					CustLabel2:
+		                						text: "End Date: "
+	
+	
+		                				
+		                				# Right column inputs
+		                				BoxLayout:
+		                					spacing: 15
+		                					orientation: "vertical"
+		                					size_hint_x: 2
+		                					
+		                					# Status dropdown #	
+											BoxLayout:
+												spacing: 5
+												__safe_id: [status_dropdown2.__self__]
+								    			
+								    			Button:
+											        id: status_btn2
+											        text: '-'
+											        on_release: status_dropdown2.open(self)
+											        size_hint_y: None
+											        height: '48dp'
+											        
+											    Widget:
+											        on_parent: status_dropdown2.dismiss()
+											
+											    DropDown:
+											
+											        id: status_dropdown2
+											        on_select: status_btn2.text = args[1]
+											
+											        Button:
+											            text: 'Select All'
+											            size_hint_y: None
+											            height: '48dp'
+											            on_release: status_dropdown2.select('-')
+											            
+											        Button:
+											            text: 'New'
+											            size_hint_y: None
+											            height: '48dp'
+											            on_release: status_dropdown2.select('New')
+											        Button:
+											            text: 'In Progress'
+											            size_hint_y: None
+											            height: '48dp'
+											            on_release: status_dropdown2.select('In Progress')
+											        Button:
+											            text: 'Resolved'
+											            size_hint_y: None
+											            height: '48dp'
+											            on_release: status_dropdown2.select('Resolved')
+											        Button:
+											            text: 'Closed'
+											            size_hint_y: None
+											            height: '48dp'
+											            on_release: status_dropdown2.select('Closed')
+											        Button:
+											            text: 'Rejected'
+											            size_hint_y: None
+											            height: '48dp'
+											            on_release: status_dropdown2.select('Rejected')
+											
+											# Tracker dropdown #
+								    		BoxLayout:
+									    		__safe_id: [tracker_dropdown2.__self__]
+									    			
+									    		Button:
+												    id: tracker_btn2
+												    text: '-'
+												    on_release: tracker_dropdown2.open(self)
+												    size_hint_y: None
+												    height: '48dp'
+												
+												Widget:
+												    on_parent: tracker_dropdown2.dismiss()
+												
+												DropDown:
+												    id: tracker_dropdown2
+												    on_select: tracker_btn2.text = args[1]
+												
+												    
+												    Button:
+												        text: 'Select All'
+												        size_hint_y: None
+												        height: '48dp'
+												        on_release: tracker_dropdown2.select('-')
+												        
+												    Button:
+												        text: 'Data Problems'
+												        size_hint_y: None
+												        height: '48dp'
+												        on_release: tracker_dropdown2.select('Data Problems')
+												
+												    Button:
+												        text: 'Support'
+												        size_hint_y: None
+												        height: '48dp'
+												        on_release: tracker_dropdown2.select('Support')	
+												
+											# Category dropdown #	
+											BoxLayout:
+												spacing: 5
+												__safe_id: [category_dropdown2.__self__]
+								    			
+								    			Button:
+											        id: category_btn2
+											        text: '-'
+											        on_release: category_dropdown2.open(self)
+											        size_hint_y: None
+											        height: '48dp'
+											
+											    Widget:
+											        on_parent: category_dropdown2.dismiss()
+											
+											    DropDown:
+											        id: category_dropdown2
+											        on_select: category_btn2.text = args[1]
+											
+											        Button:
+											            text: 'Select All'
+											            size_hint_y: None
+											            height: '48dp'
+											            on_release: category_dropdown2.select('-')
+											        
+											        Button:
+											            text: 'Amplitudes'
+											            size_hint_y: None
+											            height: '48dp'
+											            on_release: category_dropdown2.select('Amplitudes')
+											        Button:
+											            text: 'Completeness'
+											            size_hint_y: None
+											            height: '48dp'
+											            on_release: category_dropdown2.select('Completeness')
+											        Button:
+											            text: 'Metadata'
+											            size_hint_y: None
+											            height: '48dp'
+											            on_release: category_dropdown2.select('Metadata')
+											        Button:
+											            text: 'Other'
+											            size_hint_y: None
+											            height: '48dp'
+											            on_release: category_dropdown2.select('Other')
+											        Button:
+											            text: 'Timing'
+											            size_hint_y: None
+											            height: '48dp'
+											            on_release: category_dropdown2.select('Timing')
+											            
+											
+											TextInput:
+												id: query_start_id
+												write_tab: False
+												multiline: False
+											TextInput:
+												id: query_end_id
+												write_tab: False
+												multiline: False
+	
+		                					
+		                					
+		                				# checkmark column
+		                				BoxLayout:
+		                					orientation: "vertical"
+		                					size_hint_x: .7
+		                					spacing: 15
+		                					padding: 5, 0, 5, 0
+			                				
+			                				Widget:
+		                					Widget:
+		                					Widget:
+		                					BoxLayout:
+		                						padding: 5,5,5,5
+		                						orientation: 'vertical'
+			                					
+				                				ToggleButton:
+				                					id: start_before_id
+				                					text: "On/Before"
+				                					state: 'normal'
+				                					group: 'start'
+				                				ToggleButton:
+				                					text: "On/After"
+				                					state: 'down'
+				                					group: 'start'
+		                					
+				                				
+			                				BoxLayout:
+			                					padding:5,5,5,5
+			                					orientation: 'vertical'
+				                				ToggleButton:
+													id: end_before_id
+				                					text: "On/Before"
+				                					state: 'down'
+				                					group: 'end'
+				                				ToggleButton:
+				                					text: "On/After"
+				                					state: 'normal'
+				                					group: 'end'
+			                				
+	
+		                		BoxLayout:
+									# buttons - select file
+									spacing: 15
+									orientation: 'horizontal'
+									size_hint_y: 0.16
+									 
+									CustomButton:
+					    				text: "Create Ticket"
+					    				on_release: 
+					    					root.manager.previous = root.manager.current  
+											root.manager.current = 'newTicketsScreen'
+											root.go_To_NewTickets()
+					    					
+	 
+					    					   	
+							    	BoxLayout:
+							    		orientation: 'horizontal'
+	
+							    		CustomButton:
+							    			text: "See Tickets"
+							    			on_release:
+							    				root.manager.current = 'selectedTicketsScreen'
+							    				root.find_tickets()			    				
+	
+							        	
+		                ###### GENERATE REPORT TAB ######       
+		                TabbedPanelItem:
+		                    text: "Generate Report"
+		                    text_size: self.size
+		                    height: self.texture_size[1]
+		                   
+		                    BoxLayout:
+		                    	# Stacks the main page on top of a long 'generate Report' button
+		                    	orientation: 'vertical'
+		                    	padding: 5, 10, 5, 0
+		                    	
+			                    BoxLayout:
+			                    	orientation: 'horizontal'
+			                    	padding: 0,0,0,5
+			                    	
+			                    	BoxLayout:
+			                    		# First column: labels
+			                    		orientation: 'vertical'
+			                    		spacing: 15
+			                    		padding: 5,0,15,0
+					            		size_hint_x: .35
+					            			    
+										CustLabel2:
+											text: 'Preference File:'
+										CustLabel2:
+											text: 'Directory:'
+										CustLabel2:
+											text: 'Network:'
+										CustLabel2:
+											text: 'Stations:'
+										CustLabel2:
+											text: 'Locations:'
+										CustLabel2:
+											text: 'Channels:'
+			                    	
+			                    	BoxLayout:
+			                    		# Middle column: splits for bottom half
+			                    		orientation: 'vertical'
+			                    		spacing: 15
+			                    		
+				                		BoxLayout:
+				                			spacing: 15
+				                			orientation: 'vertical'
+				                			size_hint_y: 2
+				                			
+					                		TextInput:
+					                    		text: ''
+					                    		id: pref_id3
+					                    		write_tab: False
+					                    		multiline: False
+		
+					                		BoxLayout:
+				                    			orientation: 'horizontal'
+				                    			spacing: 15
+			                    			
+				                    			TextInput:
+				                    				size_hint_x: 3
+				                    				write_tab: False
+				                    				id: dir_id3
+				                    			CustomButton:
+				                    				text: "Apply\nChanges"
+				                    				on_release: root.set_directory('Generate')
+				                    			CustLabel2:
+				                    				text: "CSV File: "
+				                    			TextInput:
+				                    				size_hint_x: 2
+				                    				id: csv_id
+				                    				write_tab: False
+					                		
+					                		#TextInput:
+					                    	#	text: ''
+					                    	#	id: csv_id
+					                    	#	write_tab: False
+					                    	#	multiline: False
+			                    		
+			                    		BoxLayout:
+			                    			# NSLC text inputs, second column of labels
+			                    			orientation: 'horizontal'
+			                    			size_hint_y: 4
+			                    			
+			                    			
+			                    			BoxLayout:
+			                    				# NSLC inputs
+			                    				orientation: 'vertical'
+			                    				spacing: 15
+			                    				
+			                    				TextInput:
+				                    				text: ''
+				                    				id: generate_net_id
+				                    				write_tab: False
+													multiline: False
+				                    			TextInput:
+				                    				text: ''
+				                    				id: generate_sta_id
+				                    				write_tab: False
+													multiline: False
+				                    			TextInput:
+				                    				text: ''
+				                    				id: generate_loc_id
+				                    				write_tab: False
+													multiline: False
+				                    			TextInput:
+				                    				text: ''
+				                    				id: generate_cha_id
+				                    				write_tab: False
+													multiline: False
+			                    			
+			                    			BoxLayout:
+			                    				# Labels
+			                    				orientation: 'vertical'
+			                    				spacing: 5
+			                    				padding: 5,10,15,10
+			                    				
+				                    			CustLabel2:
+				                    				text: 'Start:'
+				                    			CustLabel2:
+				                    				text: 'Status:'
+				                    			CustLabel2:
+				                    				text: 'Tracker:'
+			                    				Widget:
+			                    	
+			                    	BoxLayout:
+			                    		# Rightmost column, gets split a lot
+			                    		orientation: 'vertical'
+			                    		#spacing: 15
+			                    		padding: 10,0,15,0
+			                    		
+			                 
+			                    	
+				                    	BoxLayout:
+				                    		orientation: 'horizontal'
+				                    		size_hint_y: 2
+				                    		spacing: 15
+				                    		padding: 0,0,0,5
+				                    	
+				                    		BoxLayout:
+				                    			# 2 Browse Buttons
+				                    			orientation: 'vertical'
+				                    			spacing: 15
+					                			size_hint_x: 0.2
+						                			
+						                		CustomButton:
+										        	text: 'Browse'
+										        	on_release: root.pref_load()
+						                		CustomButton:
+										        	text: 'Browse'
+										        	on_release: root.csv_load()
+		
+				                    		BoxLayout:
+				                    			# 1 Autofill button, one blank widget
+				                    			spacing: 15
+									            orientation: 'vertical'
+						            			size_hint_x: .4
+												
+												CustomButton:
+										        	text: 'Autofill'
+										        	on_release: root.autofill_pref(pref_id3.text)
+												Widget: 
+				                    			
+				                    	BoxLayout:
+				                    		# houses start/end inputs
+				                    		orientation: 'horizontal'
+				                    		padding: 0,5,0,5
+				                    		spacing: 5
+				                    		              		
+				                    		TextInput:
+				                    			size_hint_x: 1.25
+				                    			text: ''
+				                    			id: generate_start_id
+				                    			write_tab: False
+												multiline: False
+				                    			
+				                    		BoxLayout:
+				                				padding: 5
+				                				orientation: 'vertical'
+					                			ToggleButton:
+													id: generate_start_before_id
+					                				text: "On/Before"
+					                				state: 'down'
+					                				group: 'generate_start'
+					                			ToggleButton:
+					                				id: generate_start_after_id
+					                				text: "On/After"
+					                				state: 'normal'
+					                				group: 'generate_start'
+				                    			
+				                    		CustLabel2:
+				                    			text: 'End: '
+				                    		
+				                    		TextInput:
+				                    			size_hint_x: 1.25
+				                    			text: ''
+				                    			id: generate_end_id
+				                    			write_tab: False
+												multiline: False
+				                    			
+				                    		BoxLayout:
+				                				padding: 5
+				                				orientation: 'vertical'
+					                			ToggleButton:
+													id: generate_end_before_id
+					                				text: "On/Before"
+					                				state: 'normal'
+					                				group: 'generate_end'
+					                			ToggleButton:
+					                				text: "On/After"
+					                				state: 'down'
+					                				group: 'generate_end'	
+				                    		
+				                    		
+				                    	BoxLayout:
+				                    		# houses status selectors 
+				                    		orientation: 'horizontal'
+				                    		spacing: 5
+				                    		padding: 0,0,0,5
+				                    		
+				                    		ToggleButton:
+				                				id: generate_new_id
+					                			text: "New"
+					                			state: 'down'
+					                		ToggleButton:
+					                			id: generate_in_progress_id
+					                			text: "In Progress"
+					                			state: 'normal'
+					                		ToggleButton:
+					                			id: generate_resolved_id
+					                			text: "Resolved"
+					                			state: 'normal'
+					                		ToggleButton:
+					                			id: generate_closed_id
+					                			text: "Closed"
+					                			state: 'normal'
+					                		ToggleButton:
+					                			id: generate_rejected_id
+					                			text: "Rejected"
+					                			state: 'normal'
+				                    		
+				                    	BoxLayout:
+				                    		# houses tracker selectors
+				                    		orientation: 'horizontal'
+				                    		spacing: 5
+				                    		
+				                    		ToggleButton:
+						                		id: generate_data_problems_id
+							                	text: "Data Problems"
+							                	state: 'down'
+							                ToggleButton:
+							                	id: generate_support_id
+							                	text: "Support"
+							                	state: 'normal'
+				                    		Widget:
+				                    		Widget:
+				                    		
+				                    	BoxLayout:
+				                    		# houses 'local db' checkbox
+				                    		orientation: 'horizontal'	
+			                    			
+			                    			Widget:
+			                    			Widget:
+			                    			Widget:
+			                    			CustLabel2:
+			                    				size_hint_x: 2
+			                    				text: 'Use QuARG Tickets\nfor Report?'
+			                            	CheckBox:
+										        active: True
+										        id: generate_internal_id
+				 
+				    										        	
+								BoxLayout:
+		            				orientation: "horizontal"
+		            				padding: 0,5,0,5
+		            				spacing: 1
+		            				size_hint_y: 0.175
+		            				
+									CustomButton:
+										text: "Generate Report"
+									    on_release: root.generate_report()
+		 
+						###### HELP PAGE TAB ######       
+		                TabbedPanelItem:
+		                    text: "Help"
+		                    text_size: self.size
+		                    height: self.texture_size[1]
+		                   
+		                    BoxLayout:
+		                    	# Stacks the main page on top of a long 'generate Report' button
+		                    	orientation: 'vertical'
+		                    	padding: 5, 10, 5, 0
+		                    	
+		                    	BoxLayout:
+		                    		orientation: 'horizontal'
+		                    		
+			                    	ScrollView:
+				                    	Label:
+				                    		id: help_text_id
+				                    		padding: (30, 30)
+					                    	size_hint: None, None
+				        					size: self.texture_size
+				                    		text: root.help_text(carousel.index)
+				                    
+		                    		
+		                    		BoxLayout:
+		                    			orientation: 'vertical'
+		                    			
+		                    			BoxLayout:
+		                    				orientation: 'horizontal'
+		                    				
+		              
+				                    		CustomButton:
+									            text: 'Prev'
+									            on_release: carousel.load_previous()
+									
+									        CustomButton:
+									            text: 'Next'
+									            on_release: root.help_text(carousel.index)
+									            on_release: carousel.load_next()
+									            
+							            
+									    Carousel:
+									        id: carousel
+									        loop: True
+									        size_hint_y: 7
+									
+											CustImage:
+								                source: 'documentation/figures/Intro.png' 
+									        CustImage:
+								                source: 'documentation/figures/FindIssues.png'
+											CustImage:
+								                source: 'documentation/figures/PreferenceFile1.png'
+											CustImage:
+								                source: 'documentation/figures/PreferenceFile2.png'
+											CustImage:
+								                source: 'documentation/figures/ThresholdsFile.png'
+									        CustImage:
+								                source: 'documentation/figures/ExamineIssues.png'
+									        CustImage:
+								                source: 'documentation/figures/ExamineIssues2.png'
+											CustImage:
+								                source: 'documentation/figures/CreateTicket.png'
+									        CustImage:
+								                source: 'documentation/figures/SeeTickets.png'
+									        CustImage:
+								                source: 'documentation/figures/TicketList.png'
+									        CustImage:
+								                source: 'documentation/figures/UpdateTicket.png'
+									        CustImage:
+								                id: image
+								                source: 'documentation/figures/GenerateReport.png'
+		                    	
+		                    	BoxLayout:
+		                    		orientation: "horizontal"
+		            				padding: 0,5,0,5
+		            				spacing: 1
+		            				size_hint_y: 0.175
+		         
+			                    	#CustomButton:
+			                    	#	text: "Introduction and Overview"
+			                    	#	on_release: root.open_overview_documentation()
+			                    	CustomButton:
+			                    		text: "Detailed Documentation"
+			                    		on_release: root.open_detailed_documentation()
+			                    	
+		    # ---------- Exit Bar at Bottom ----------
+		    BoxLayout:
+		        orientation: "horizontal"
+		        size_hint: 1, .2
+		 
+		        BoxLayout:
+		            orientation: "horizontal"
+		            size_hint_x: .25
+		 
+		            CustomButton:
+		        		text: "Exit QuARG"
+		        		on_release: root.exit_confirmation()
+	 
+
+<PreferencesScreen>:
+	instrument_list_rv: instrument_list_rv_id
+	thresholdGroups_list_rv : thresholdGroups_list_rv_id
+	metric_source_btn: metric_source_btn
+	metadata_source_btn: metadata_source_btn
+	metric_source_text: preference_metric_source_input_id
+	metric_browse_btn: preference_metric_source_browse_button_id
+	metadata_source_text: preference_metadata_source_input_id
+	metadata_browse_btn: preference_metadata_source_browse_button_id
+	preference_file: pref_pref_file_id
+	pref_net: pref_net_id
+	pref_sta: pref_sta_id
+	pref_loc: pref_loc_id
+	pref_cha: pref_cha_id
+	pref_H: pref_H_id
+	pref_V: pref_V_id
+	#pref_thresh: pref_thresh_id
+	pref_dir: pref_dir_id
+	pref_issue: pref_issue_id
+	pref_ticket: pref_ticket_id
+	pref_author: pref_author_id
+	pref_project: pref_project_id
+	pref_email: pref_email_id
+	frequency_btn: frequency_btn
+	
+	
+	
+	BoxLayout:
+		orientation: "vertical"
+		padding: 10
+		spacing: 10
+		
+		# This pairs with the bottom exit bar
+		BoxLayout:
+			orientation: "vertical"
+
+			# Box for title label and the main body
+			BoxLayout:
+				orientation: "vertical"
+				padding: 5, 0, 5, 15
+				spacing: 10
+				
+	 			# White bar at top
+				BoxLayout:
+					orientation: 'horizontal'
+					size_hint_y: .05
+					spacing: 10
+					
+					CustLabel:
+						text: "Edit Preference File"
+						halign: 'center'
+
+				BoxLayout:
+					spacing: 30
+					padding: 10
+					orientation: 'vertical'
+					
+					
+					canvas:
+						Color:
+			            	rgba: (.2, .2, .2, 1)
+			        	Rectangle:
+			            	pos: self.pos
+			            	size: self.size	
+					
+					
+					BoxLayout:
+						orientation: 'horizontal'
+						spacing: 30
+						padding: 10
+						size_hint_y: 13
+						
+						# First Column
+						BoxLayout:
+							# Targets and Files
+							orientation: 'horizontal'
+							spacing: 10
+							
+							BoxLayout: 
+								# labels
+								orientation: 'vertical'
+								spacing: 10
+							
+								CustLabel2:
+									text: 'Filename: '
+								
+								Widget:
+								CustLabel2:
+									text: 'Network(s): '
+								CustLabel2:
+									text: 'Station(s): '
+								CustLabel2:
+									text: 'Location(s): '
+								CustLabel2:
+									text: 'Channel(s): '
+									
+								Widget:								
+								CustLabel2:
+									text: 'H: '
+								CustLabel2:
+									text: 'V: '
+	
+									
+								Widget:
+								
+								#CustLabel2:
+								#	text: 'Threshold File: '
+								CustLabel2:
+									text: 'Working Directory: '
+								CustLabel2:
+									text: 'Issues File: '
+								CustLabel2:
+									text: 'Ticket File: '
+								#Widget:
+								
+							BoxLayout:
+								# text inputs
+								orientation: 'vertical'
+								spacing: 10
+								size_hint_x: 1.25
+								
+	
+								CustTextInput:
+									text: ''
+									id: pref_pref_file_id
+								
+								Label:
+									text: 'Targets'
+									text_size: self.size
+									halign: 'center'
+									valign: 'bottom'
+								CustTextInput:
+									text: ''
+									id: pref_net_id
+								CustTextInput:
+									text: '*'
+									id: pref_sta_id
+								CustTextInput:
+									text: '*'
+									id: pref_loc_id
+								CustTextInput:
+									text: 'BH?,HH?'
+									id: pref_cha_id
+								
+								Label:
+									text: 'Channel codes'
+									text_size: self.size
+									halign: 'center'
+									valign: 'bottom'
+								
+								CustTextInput:
+									text: 'E,N'
+									id: pref_H_id
+								CustTextInput:
+									text: 'Z'
+									id: pref_V_id
+									
+								
+								Label:
+									text: 'Files'
+									text_size: self.size
+									halign: 'center'
+									valign: 'bottom'
+									
+								#CustTextInput:
+								#	text: './thresholds.txt'
+								#	id: pref_thresh_id
+								CustTextInput:
+									text: './'
+									id: pref_dir_id
+								CustTextInput:
+									text: 'issues.txt'
+									id: pref_issue_id
+								CustTextInput:
+									text: 'tickets.csv'
+									id: pref_ticket_id
+								#Widget:
+								
+							BoxLayout:
+								# Buttons
+								orientation: 'vertical'
+								size_hint_x: .75
+								spacing: 10
+								
+								Button:
+									text: 'Browse'
+									on_release: root.pref_file_load()
+								Button:
+									text: "Load File"
+									on_release:
+										root.load_preference_file(pref_pref_file_id.text)
+								Widget:
+								Widget:
+								Widget:
+								Widget:
+								Widget:
+								Widget:	
+								Widget:
+								Widget:
+								#Button:
+								#	text: 'Browse'
+								#	on_release: root.thresh_file_load()
+								Button:
+									text: 'Browse'
+									on_release: root.working_dir_load()
+								Widget:
+								Widget:
+								#Widget:
+								
+								
+						# Second Column	
+						BoxLayout:
+							# Thresholds
+							orientation: 'vertical'
+							spacing: 10
+							size_hint_x: .75
+							
+							CustLabel3:
+								text: "Instrument Groups (select all to be included):"
+							Preference_Instruments_RV:
+								id: instrument_list_rv_id
+								size_hint_y: 3
+							
+								
+							Widget:
+							CustLabel3:
+								text: "Threshold Groups (select all to be included):"
+							Preference_ThresholdGroups_RV:
+								id: thresholdGroups_list_rv_id
+								#text: 'Threshold Groups RV (Amplitudes, etc)'
+								size_hint_y: 3
+								
+							Widget:
+							CustLabel3:
+								text: 'Associating Threshold Groups with Thresholds:'
+							Button:
+								text:  'Edit Groups Dictionary'
+								size_hint_y: 2
+								on_release: 
+									root.go_to_thresholdGroups()
+									root.manager.previous = root.manager.current  
+									root.manager.current = 'thresholdGroupsScreen'
+									
+							#Widget:
+									
+							
+							
+							
+						### THIRD COLUMN ###		
+						BoxLayout:
+							# sources and report details
+							orientation: 'vertical'
+							spacing: 10
+							
+							BoxLayout:
+								orientation: 'horizontal'
+								spacing: 10
+								
+								CustLabel3:
+									text: 'Metric Source: '
+									
+								# Metric Source dropdown #
+					    		BoxLayout:
+					    			size_hint_x: 2
+						    		__safe_id: [metric_source_dropdown.__self__]
+						    			
+						    		Button:
+									    id: metric_source_btn
+									    text: '-'
+									    on_release: metric_source_dropdown.open(self)
+									    size_hint_y: None
+									    height: '35dp'
+										
+										Widget:
+										    on_parent: metric_source_dropdown.dismiss()
+										
+										DropDown:
+										    id: metric_source_dropdown
+										    on_select: metric_source_btn.text = args[1]
+										
+										    Button:
+										        text: 'IRIS'
+										        size_hint_y: None
+										        height: '35dp'
+										        #background_color: .5,.5,.5,1
+										        #background_normal: ''
+										        on_release: 
+										        	metric_source_dropdown.select('IRIS')
+										        	root.deactivate_metric_source_text()
+										
+										    Button:
+										        text: 'Local ISPAQ SQLite Database'
+										        size_hint_y: None
+										        height: '35dp'
+										        #background_color: .5,.5,.5,1
+										        #background_normal: ''
+										        on_release: 
+										        	metric_source_dropdown.select('Local ISPAQ SQLite Database')
+										        	root.deactivate_metric_source_text()
+							BoxLayout:
+								orientation: 'horizontal'
+								spacing: 10
+								
+								CustTextInput:
+									size_hint_x: 2 
+									scroll_x: 1
+									id: preference_metric_source_input_id
+								Button:
+									text: 'Browse'
+									id: preference_metric_source_browse_button_id
+									on_release: root.metric_file_load()
+									
+							Widget:
+							
+							BoxLayout:
+								orientation: 'horizontal'
+								spacing: 10
+								
+								
+								CustLabel3:
+									text: 'Metadata Source: '
+									
+								# Metadata Source dropdown #
+					    		BoxLayout:
+					    			size_hint_x: 2
+						    		__safe_id: [metadata_source_dropdown.__self__]
+						    			
+						    		Button:
+									    id: metadata_source_btn
+									    text: '-'
+									    on_release: metadata_source_dropdown.open(self)
+									    size_hint_y: None
+									    height: '35dp'
+									
+										Widget:
+										    on_parent: metadata_source_dropdown.dismiss()
+										
+										DropDown:
+										    id: metadata_source_dropdown
+										    on_select: metadata_source_btn.text = args[1]
+										
+										    Button:
+										        text: 'IRIS'
+										        size_hint_y: None
+										        height: '35dp'
+										        #background_color: .5,.5,.5,1
+										        #background_normal: ''
+										        on_release: 
+										        	metadata_source_dropdown.select('IRIS')
+										        	root.deactivate_metadata_source_text()
+										
+										    Button:
+										        text: 'Local Metadata File'
+										        size_hint_y: None
+										        height: '35dp'
+										        #background_color: .5,.5,.5,1
+										        #background_normal: ''
+										        on_release: 
+										        	metadata_source_dropdown.select('Local Metadata File')
+										        	root.deactivate_metadata_source_text()
+							
+							
+							BoxLayout:
+								orientation: 'horizontal'
+								spacing: 10
+									        	
+								CustTextInput:
+									size_hint_x: 2
+									id: preference_metadata_source_input_id
+								Button:
+									text: 'Browse'
+									id: preference_metadata_source_browse_button_id
+									on_release: root.meta_file_load()
+									
+							Widget:
+							BoxLayout:
+								orientation: 'horizontal'
+								spacing: 10 
+								
+								Label:
+									text: 'Report Frequency: '
+								
+								# Frequency dropdown #
+					    		BoxLayout:
+						    		size_hint_x: 2
+						    		__safe_id: [frequency_dropdown.__self__]
+						    			
+						    		Button:
+									    id: frequency_btn
+									    text: '-'
+									    on_release: frequency_dropdown.open(self)
+									    size_hint_y: None
+									    height: '35dp'
+									
+										Widget:
+										    on_parent: frequency_dropdown.dismiss()
+										
+										DropDown:
+										    id: frequency_dropdown
+										    on_select: frequency_btn.text = args[1]
+										
+											Button:
+										        text: 'Daily'
+										        size_hint_y: None
+										        #background_color: .5,.5,.5,1
+										        #background_normal: ''
+										        height: '35dp'
+										        on_release: 
+										        	frequency_dropdown.select('Daily')
+										        	
+										    Button:
+										        text: 'Weekly'
+										        size_hint_y: None
+										        #background_color: .5,.5,.5,1
+										        #background_normal: ''
+										        height: '35dp'
+										        on_release: 
+										        	frequency_dropdown.select('Weekly')
+										
+										    Button:
+										        text: 'Monthly'
+										        size_hint_y: None
+										        #background_normal: ''
+										        #background_color: .5,.5,.5,1
+										        height: '35dp'
+										        on_release: 
+										        	frequency_dropdown.select('Monthly')
+										       
+										    Button:
+										        text: 'Quarterly'
+										        size_hint_y: None
+										        #background_color: .5,.5,.5,1
+										        #background_normal: ''
+										        height: '35dp'
+										        on_release: 
+										        	frequency_dropdown.select('Quarterly')
+									        	
+										    
+								
+							
+							Widget:
+							
+							BoxLayout:
+								orientation: 'horizontal'
+								spacing: 10
+								
+								Label:
+									text: 'Author: '
+								CustTextInput:
+									size_hint_x: 2
+									id: pref_author_id
+									
+							BoxLayout:
+								orientation: 'horizontal'
+								spacing: 10
+								
+								Label:
+									text: 'Project Name: '
+								CustTextInput:
+									size_hint_x: 2
+									id: pref_project_id
+							BoxLayout:
+								orientation: 'horizontal'
+								spacing: 10
+								
+								Label:
+									text: 'Email: '
+								CustTextInput:
+									size_hint_x: 2
+									id: pref_email_id
+								
+							
+							#Widget:
+					Button:
+						text: "Save Preference File"
+						background_color: (.3,.5,.7,1)
+						background_normal: ' '
+						on_release:
+							root.save_preference_file()
+					
+
+	
+	    # ---------- Exit Bar at Bottom ----------
+	    BoxLayout:
+	        orientation: "horizontal"
+	        size_hint: 1, .08
+	 
+	        BoxLayout:
+	            orientation: "horizontal"
+	            size_hint_x: .25
+
+				CustomButton:
+					text: "Return"
+					on_release:
+						root.manager.previous = root.manager.current
+						root.manager.current = 'mainScreen'
+						#root.clear_all_on_return()
+
+						
+	            CustomButton:
+	        		text: "Exit QuARG"
+	        		on_release: root.exit_confirmation()
+
+
+<ThresholdGroupsScreen>:
+
+	thresholdNames_rv: thresholdNames_rv_id
+	thresholdGroups_rv: thresholdGroups_rv_id
+	thresholdGroupAndNames_rv: thresholdGroupAndNames_rv_id
+	
+	BoxLayout:
+		orientation: 'vertical'
+		padding: 10
+		spacing: 10
+		
+		
+		BoxLayout:
+			orientation: 'vertical'
+			
+			
+			# White bar at top
+			BoxLayout:
+				orientation: 'horizontal'
+				size_hint_y: .05
+				Widget:
+				Label:
+					text: 'Edit Threshold-Group Associations'
+					color: 0,0,0,1
+				Widget
+			
+			BoxLayout:
+				canvas:
+					Color:
+		            	rgba: (.2, .2, .2, 1)
+		        	Rectangle:
+		            	pos: self.pos
+		            	size: self.size	
+		            	
+		            	
+				BoxLayout:
+					orientation: 'horizontal'
+					spacing: 10
+					padding: 500,10,500,100
+					#padding: 0,0,0,100
+					
+					
+					
+					## Column 1
+					BoxLayout:
+						orientation: 'vertical'
+						
+						
+						CustLabel4:
+							text: "Associate this threshold..."
+							size_hint_y: .05
+							color: 1,1,1,1
+						
+						BoxLayout:
+							canvas:
+								Color:
+					            	rgba: (1, 1, 1, 1)
+					        	Rectangle:
+					            	pos: self.pos
+					            	size: self.size	
+					        BoxLayout:
+					        	padding: 10	
+								ThresholdNames_RV:
+									id: thresholdNames_rv_id
+						
+					
+					## Column 1.5	
+					BoxLayout:
+						orientation: 'vertical'
+						size_hint_x: 0.25
+						Widget:
+							size_hint_y: 5
+						Label:
+							text: '+'
+							text_size: self.size
+							halign: 'center'
+							valign: 'middle'
+							color: 1,1,1,1
+						Widget:
+							size_hint_y: 4
+						
+					## Column 2
+					BoxLayout:
+						orientation: 'vertical'
+						CustLabel4:
+							text: "... With this group"
+							size_hint_y: .05
+							color: 1,1,1,1
+							
+						BoxLayout:
+							canvas:
+								Color:
+					            	rgba: (1, 1, 1, 1)
+					        	Rectangle:
+					            	pos: self.pos
+					            	size: self.size
+					        BoxLayout:
+					        	padding: 10	
+								ThresholdGroups_RV:
+									id: thresholdGroups_rv_id
+						
+					## Column 2.5
+					BoxLayout:
+						orientation: 'vertical'
+						size_hint_x: 0.25
+						Widget:
+							size_hint_y: 5
+						Button:
+							text: "Add"
+							on_release: root.add_threshGroup()
+						Widget:
+							size_hint_y: 4
+					
+					## Column 3.5
+					BoxLayout:
+						orientation: 'vertical'
+						size_hint_x: 0.25
+						
+					## Column 3
+					BoxLayout:
+						orientation: 'vertical'
+						CustLabel4:
+							text: "Group :: Threshold"
+							color: 1,1,1,1
+							size_hint_y: .05
+							
+						BoxLayout:
+							
+							canvas:
+								Color:
+					            	rgba: (1, 1, 1, 1)
+					        	Rectangle:
+					            	pos: self.pos
+					            	size: self.size	
+					        BoxLayout:
+					        	orientation: 'vertical'
+					        	padding: 10
+								ThresholdGroupAndNames_RV:
+									id: thresholdGroupAndNames_rv_id
+									
+								Button:
+									text: "Remove"
+									size_hint_y: 0.1
+									on_release: root.remove_threshGroup()
+							
+					
+	
+						#Widget:
+						#	size_hint_y: 5
+						#Button:
+						#	text: "Remove"
+						#	on_release: root.remove_threshGroup()
+						#Widget:
+						#	size_hint_y: 4
+				
+			
+		# ---------- Exit Bar at Bottom ----------
+	    BoxLayout:
+	        orientation: "horizontal"
+	        size_hint: 1, .08
+	 
+	        BoxLayout:
+	            orientation: "horizontal"
+	            size_hint_x: .25
+
+				CustomButton:
+					text: "Return"
+					on_release:
+						root.manager.previous = root.manager.current
+						root.manager.current = 'preferencesScreen'
+						root.clear_all_on_return()
+
+						
+	            CustomButton:
+	        		text: "Exit QuARG"
+	        		on_release: root.exit_confirmation()
+
+<ThresholdsScreen>:
+
+	threshold_list_rv: threshold_names_id
+	threshold_group_rv: threshold_groups_id
+	#threshold_definition: threshold_def_id
+	threshold_def_rv: threshold_def_rv_id
+	metrics_rv: metrics_rv_id
+	metadata_rv: metadata_rv_id
+	metric_text: metric_text_id
+	channel_avg_button: channel_avg_id
+	channel_vs_button: channel_vs_id
+	
+	
+	BoxLayout:
+		orientation: "vertical"
+		padding: 10
+		spacing: 10
+		
+		
+		BoxLayout:
+			orientation: "vertical"
+			spacing: 10
+			
+			
+			# Box for title label and the main body, to make it easy to keep the exit bar at bottom the right size
+			BoxLayout:
+				orientation: "vertical"
+				padding: 5, 0, 5, 15
+				
+
+				#CustLabel:
+				#	size_hint_y: .12
+				#	text: "Threshold Definitions"
+				#	color: 0, 0, 0, 1
+	    		#	text_size: self.size
+	    		#	halign: 'center'
+	    		#	valign: 'center'
+	 				
+				BoxLayout:
+					orientation: 'horizontal'
+					size_hint_y: .05
+					
+					
+					CustLabel4:
+						text: "Thresholds:"
+					CustLabel4:
+						text: "Instrument Groups:"
+					CustLabel4:
+						text: "Metrics:"
+					CustLabel4:
+						text: "Metadata:"
+	 				
+				BoxLayout:
+					orientation: "horizontal"
+					spacing: 10
+					padding: 10
+					canvas:
+						Color:
+			            	rgba: (.2, .2, .2, 1)
+			        	Rectangle:
+			            	pos: self.pos
+			            	size: self.size	
+					
+					BoxLayout:
+						orientation: 'vertical'
+						spacing: 10
+					
+						
+						Threshold_names_RV:
+							id: threshold_names_id
+							size_hint_y: 11
+							
+						Button:
+							text: "Add/Remove Thresholds"
+							size_hint_y: 1.2
+							on_release: root.new_threshold_popup()
+						
+						Widget:
+							
+						Button:
+							size_hint_y: 1.25
+							text: "View Current Threshold definitions"
+							on_release: root.all_thresholds_popup()
+							
+								
+						
+					BoxLayout:
+						orientation: 'vertical'
+						spacing: 10
+						
+						
+						BoxLayout:
+							size_hint_y: 2.5
+							canvas:
+								Color:
+					            	rgba: (100/255, 100/255, 100/255, 1)
+					        	Rectangle:
+					            	pos: self.pos
+					            	size: self.size	
+					            	
+							Instrument_groups_RV:
+								id: threshold_groups_id
+								#size_hint_y: 3						
+						
+						Button:
+							text: "Add/Update Instrument Groups"
+							size_hint_y: 0.5
+							on_release: root.new_group_popup()
+						Button:
+							text: "Add/Update Threshold Groups"
+							size_hint_y: 0.5
+							on_release: root.new_threshold_group_popup()
+							
+
+						BoxLayout:
+							orientation: 'vertical'
+							padding: 10
+							size_hint_y: 3
+							
+							Label:
+								text: " Definition: "
+								color: 1,1,1,1
+								size_hint_y: 0.2
+								text_size: self.size
+								halign: 'left'
+								
+							
+							BoxLayout:
+								orientation: 'vertical'
+								padding: 5
+								canvas:
+									Color:
+						            	rgba: (1, 1, 1, 1)
+						        	Rectangle:
+						            	pos: self.pos
+						            	size: self.size	
+								
+								Threshold_definition_RV:
+									id: threshold_def_rv_id
+	        							
+	        					Button:
+	        						text: "Delete"
+	        						size_hint_y: 0.2 
+	        						on_release: root.remove_defintion_line()
+							
+					
+					BoxLayout:
+						orientation: 'vertical'	
+						spacing: 10
+							
+						Metrics_List_RV:
+							size_hint_y: 6						
+							id: metrics_rv_id
+
+							
+						Widget:
+							
+						Label:
+							text: "Channel Options:"
+							color: 1,1,1,1
+							text_size: self.size
+							halign: 'left'
+							#size_hint_y: .1
+						
+						BoxLayout:
+							orientation: 'horizontal'
+							spacing: 10
+							
+							ToggleButton:
+								id: vertical_chans_id
+								text: 'V'
+								group: 'channel_orientation'
+								on_release:
+									root.disable_chan_options()
+							ToggleButton:
+								id: horiz_chans_id
+								text: 'H'
+								group: 'channel_orientation'
+								on_release:
+									root.disable_chan_options()
+							
+							Widget:
+								size_hint_x: .1
+							
+							ToggleButton:
+								text: 'avg'
+								id: channel_avg_id
+								group: 'channel_options'
+								disabled: True
+							ToggleButton:
+								text: 'vs'
+								id: channel_vs_id
+								group: 'channel_options'
+								disabled: True
+
+						
+								
+						BoxLayout:
+							orientation: 'horizontal'
+							#size_hint_y: .1
+							spacing: 10
+							padding: 5
+							canvas:
+								Color:
+					            	rgba: (1, 1, 1, 1)
+					        	Rectangle:
+					            	pos: self.pos
+					            	size: self.size	
+								
+							CustLabel:
+								text: "Field: "	
+								size_hint_x: 1.5
+													
+							TextInput:
+								text: ""
+								id: metric_text_id
+								write_tab: False
+								size_hint_x: 4.5
+							
+							CustLabel:
+								text: " ABS"
+								#size_hint_x: .5
+							CheckBox:
+								group: "absolute"
+								id: absolute_id
+								
+							
+						BoxLayout:
+							orientation: 'horizontal'
+							#size_hint_y: .1
+							canvas:
+								Color:
+					            	rgba: (1, 1, 1, 1)
+					        	Rectangle:
+					            	pos: self.pos
+					            	size: self.size	
+							
+							CustLabel:
+								text: "<"
+							CheckBox:
+								group: 'greater_and_less'
+								id: threshold_less_id
+							
+							CustLabel:
+								text: '='
+							CheckBox:
+								id: threshold_equal_id
+								group: 'threshold_equal_and_not'
+								
+							CustLabel:
+								text: '!='
+							CheckBox:
+								id: threshold_notequal_id
+								group: 'threshold_equal_and_not'
+								
+							CustLabel:
+								text: '>'
+							CheckBox:
+								group: "greater_and_less"
+								id: threshold_greater_id
+						
+						BoxLayout:
+							orientation: 'horizontal'
+							#size_hint_y: .1
+							spacing: 10
+							padding: 5
+							canvas:
+								Color:
+					            	rgba: (1, 1, 1, 1)
+					        	Rectangle:
+					            	pos: self.pos
+					            	size: self.size	
+								
+							CustLabel:
+								text: "Value: "	
+								size_hint_x: 1.5
+													
+							TextInput:
+								text: ""
+								id: metric_cutoff_id
+								write_tab: False
+								size_hint_x: 4.5
+								
+							
+								
+							Widget:
+							Widget:
+							
+						
+					
+					BoxLayout:
+						orientation: 'vertical'	
+						spacing: 10
+						
+						BoxLayout:
+							Metadata_List_RV:						
+								id: metadata_rv_id
+								disabled: True	# this prevents being able to select the label on startup
+							
+						
+						BoxLayout:
+							orientation: 'vertical'
+							spacing: 5
+							
+							Label:
+								color: 1,1,1,1
+								text_size: self.size
+								halign: 'left'
+								text: "Threshold Options:"
+								
+							BoxLayout:
+								orientation: 'horizontal'
+								ToggleButton:
+									text: 'Average'
+									id: thresh_avg_id
+									group: 'thresh_options'
+									on_release:
+										root.disable_rvs()
+									
+								ToggleButton:
+									text: 'Median'
+									id: thresh_median_id
+									group: 'thresh_options'
+									on_release:
+										root.disable_rvs()
+								
+							BoxLayout:
+								orientation: 'horizontal'
+								ToggleButton:
+									text: 'Ratio'
+									id: thresh_ratio_id
+									group: 'thresh_options'
+									on_release:
+										root.disable_rvs()
+								ToggleButton:
+									text: "Direct Comparison"
+									id: thresh_compare_id
+									group: 'thresh_options'
+									on_release:
+										root.disable_rvs()
+									
+							ToggleButton:
+								text: 'Metadata'
+								id: thresh_metadata_id
+								#group: 'thresh_options'
+								on_release:
+									root.disable_rvs()
+							
+								
+							Widget:
+							
+								
+						BoxLayout:
+							orientation: 'vertical'
+							size_hint_y: .4
+							spacing: 10
+							
+							Button:
+								#size_hint_y: 0.2
+								text: "Add Metric to Threshold Definition"
+								on_release:
+									root.add_metric_to_threshold()
+									
+										
+							Button:
+								#size_hint_y: 0.2
+								text: "Save Thresholds"
+								background_color: (.3,.5,.7,1)
+								background_normal: ' '
+								on_release: root.write_definition_to_file()
+					
+					
+				
+			
+	
+	
+		    # ---------- Exit Bar at Bottom ----------
+		    BoxLayout:
+		        orientation: "horizontal"
+		        size_hint: 1, .08
+		 
+		        BoxLayout:
+		            orientation: "horizontal"
+		            size_hint_x: .25
+	
+					CustomButton:
+						text: "Return"
+						on_release:
+							root.manager.previous = root.manager.current
+							root.manager.current = 'mainScreen'
+							root.clear_all_on_return()
+
+							
+		            CustomButton:
+		        		text: "Exit QuARG"
+		        		on_release: root.exit_confirmation()
+
+
+<ExamineIssuesScreen>:
+
+
+	# Define ids here
+	issues_rv: issue_rv_id
+	end_day: examine_end_id
+	start_day: examine_start_id
+
+	BoxLayout:
+		orientation: 'vertical'
+    	padding: 10
+    	spacing: 10
+		
+		BoxLayout:
+			orientation: "vertical"
+	 
+	 
+			BoxLayout:
+				orientation: "horizontal"
+	    		padding: 10
+	    		spacing: 10
+	    		
+	    		### TEXT INPUTS ###
+	    		BoxLayout:
+				    orientation: 'horizontal'
+	    			size_hint_x: .75
+	    			
+	    			BoxLayout:
+	    				spacing: 1
+	    				padding: 0, 0, 15, 0
+						orientation: 'vertical'
+						size_hint_x: .6
+				        
+				        CustLabel:
+				        	text: 'Start:'
+				        CustLabel:
+				        	text: 'End:'
+	    				CustLabel:
+				        	text: 'Metrics:'
+				        CustLabel:
+				        	text: 'Threshold:'
+				        CustLabel:
+				        	text: 'Network:'
+				        CustLabel:
+				        	text: 'Station:'
+				        CustLabel:
+				        	text: 'Location:'
+				        CustLabel:
+				        	text: 'Channel:'
+				        Widget:
+				        Widget:
+				        Widget:
+				        CustLabel:
+				        	text: 'Notes:'
+				        	size_hint_y: 2
+				        
+				        Widget:
+				        Widget:
+				        Widget:
+				        Widget:
+				        Widget:
+				        Widget:
+				        Widget:
+	    				
+	    			BoxLayout:
+	    				spacing: 1
+						orientation: 'vertical'
+						
+						TextInput:
+							text: '2020-04-04'
+							id: examine_start_id
+							write_tab: False
+							multiline: False
+							on_text_validate: root.set_dates()
+						TextInput:
+							text: '2020-04-13'
+							id: examine_end_id
+							write_tab: False
+							multiline: False
+							on_text_validate: root.set_dates()
+						TextInput:
+							text: 'num_gaps'
+							id: metrics_id
+							write_tab: False
+							multiline: False
+						TextInput:
+							text: ''
+							id: threshold_id
+							write_tab: False
+							multiline: False
+						TextInput:
+							text: ''
+							id: network_id
+							write_tab: False
+							multiline: False
+						TextInput:
+							text: ''
+							id: station_id
+							write_tab: False
+							multiline: False
+						TextInput:
+							text: ''
+							id: location_id
+							write_tab: False
+							multiline: False
+						TextInput:
+							text: ''
+							id: channel_id
+							write_tab: False
+							multiline: False
+						CustomButton:
+	    					text: "Go To Target"
+	    					on_release: root.go_to_target()
+	    				CustomButton:
+	    					text: "Go To Threshold"
+	    					on_release: root.go_to_threshold()
+						Widget:
+				        TextInput:
+							text: ""
+							id: notes_id
+							write_tab: False
+							#multiline: False
+							size_hint_y: 2
+	
+				        CustomButton:
+	    					text: "Add Notes"
+	    					on_release: root.add_notes()
+	    				CustomButton:
+	    					text: "See Notes"
+	    					on_release: root.see_notes()
+				        Widget:
+				        CustomButton:
+	    					text: "Next"
+	    					on_release: root.go_to_next()
+	    				CustomButton:
+	    					text: "Previous"
+	    					on_release: root.go_to_previous()
+	    				Widget:
+	    				CustomButton:
+	    					text: "Metric List"
+	    					on_release: root.metrics_popup()
+	    				
+				        
+				        
+	    				
+	    				
+	    			
+	    		
+	    		### LINKS BUTTONS###
+	    		BoxLayout:
+	    			orientation: "vertical"
+	    			size_hint_x: .5
+	    			
+	    			CustomButton:
+	    				text: "Create Ticket"
+	    				on_release: 
+	    					root.manager.previous = root.manager.current
+							root.manager.current = 'newTicketsScreen'
+							root.go_To_NewTickets()
+	    					#app.root.previous = app.root.current  
+	    					#app.root.current = 'NewTickets'
+	    					#root.clear_images()	
+	    					
+	    			Widget:
+	    			CustomButton:
+	    				text: "Databrowser"
+	    				on_release: root.see_databrowser()
+	    			CustomButton:
+	    				text: "Waveforms"
+	    				on_release: root.see_waveforms()
+	    			CustomButton:
+	    				text: "Metrics"
+	    				on_release: root.see_metrics()
+	    			CustomButton:
+	    				text: "Metric Plot"
+	    				on_release: root.see_metric_timeseries()
+	    			CustomButton:
+	    				text: "PDFs"
+	    				on_release: root.see_pdfs()
+	    			CustomButton:
+	    				text: "Spectrograms"
+	    				on_release: root.see_spectrograms()
+	    			CustomButton:
+	    				text: "Noise Modes"
+	    				on_release: root.see_nmt()
+	    			CustomButton:
+	    				text: "GOAT"
+	    				on_release: root.see_goat()
+	    			CustomButton:
+	    				text: "Events"
+	    				on_release: root.see_events()
+	    			CustomButton:
+	    				text: "Station"
+	    				on_release: root.see_stations()
+	    			
+	    			Widget:
+	    			CustomButton:
+	    				text: "Select All"
+	    				on_release: root.select_all()
+				    CustomButton:
+	    				text: "Deselect All"
+	    				on_release: root.deselect_all()
+	    			Widget:
+	    			ToggleButton:
+						id: todo_id
+						text: "To Do"
+						state: 'normal'
+						on_release: root.set_todo(self.state) 
+						group: 'issueview'
+	    			ToggleButton:
+						id: remianing_id
+						text: "All Remaining"
+						state: 'normal'
+						on_release: root.set_remaining(self.state)
+						group: 'issueview'
+					Widget:
+					CustomButton:
+						text: "Threshold List"
+						on_release: root.thresholds_popup()
+	    			
+	
+	    				
+	    		
+	    		### INFORMATION PANE ###
+	    		BoxLayout:
+	    			orientation: "vertical"
+	    			size_hint_x: 3
+	    			
+	    			BoxLayout:
+	    				#size_hint_y: .07
+		    			orientation: "horizontal"
+		    			
+		    			CustomButton:
+		    				text: "To-Do"
+		    				on_release: root.mark_as_todo()
+		    			CustomButton:
+		    				text: "New"
+		    				on_release: root.mark_as_new()
+		    			CustomButton:
+		    				text: "Closed"
+		    				on_release: root.mark_as_closed()
+		    			CustomButton:
+		    				text: "Existing"
+		    				on_release: root.mark_as_existing()
+		    			CustomButton:
+		    				text: "Support"
+		    				on_release: root.mark_as_support()
+		    			CustomButton:
+		    				text: "No Ticket"
+		    				on_release: root.mark_as_no_ticket()
+		    			CustomButton:
+		    				text: "False Positive"
+		    				on_release: root.mark_as_false_positive()
+
+		    				
+		    		CustLabel:
+		    			#size_hint_y: .07
+		    			text: "Status    Threshold      Target                Start        End          Days  Value  Notes                         "
+		    			font_name: 'RobotoMono-Regular'
+						font_size: '14sp'
+						text_size: self.size
+	    				halign: 'left'
+	    				valign: 'middle'
+		    		
+		    		Issues_RV:
+		    			size_hint_y: 18
+		    			id: issue_rv_id
+		    			
+
+	    	
+	 		
+			BoxLayout:
+			
+				padding: 0,10,10,0
+				orientation: "horizontal"
+				size_hint: 1, .08
+		        
+				Button:
+		    		text: "All Issues"
+		    		on_release: root.see_all_issues()	
+		    	
+				Button:
+					text: "Save"
+					background_color: (.3,.5,.7,1)
+					background_normal: ' '
+					on_release: root.save_progress()
+				Button:
+					text: "Return"
+					on_release:
+						root.manager.previous = root.manager.current
+						root.manager.current = 'mainScreen'
+						
+				Button:
+					text: "Exit QuARG"
+					on_release: root.exit_confirmation()
+	  
+<NewTicketScreen>:
+    
+    # put ids here -- future recycleview to automatically fill the thresholds list??
+    newTicket_thresholds_rv: newTicket_threholds_RV_id
+    
+    BoxLayout:
+    	orientation: 'vertical'
+    	padding: 10
+    	spacing: 10
+    	
+    	
+		BoxLayout:
+			padding: 10,10,20,0
+			spacing: 1	
+			orientation: 'vertical'
+			canvas:
+	        	Color:
+	            	rgba: (.2, .2, .2, 1)
+	        	Rectangle:
+	            	pos: self.pos
+	            	size: self.size
+			
+			# Buttons Row #
+			BoxLayout:
+				spacing: 2
+				orientation: 'horizontal'
+				size_hint_y: 0.1
+				
+				Button:
+		    		text: "Import Notes as Description"
+		    		on_release: root.import_description()
+		    	Button:
+		    		text: "Import Target"
+		    		on_release: root.import_target()
+		    	Button:
+		    		text: "Clear Fields"
+		    		on_release: root.clear_ticket_fields()
+			
+			# Top section #
+			BoxLayout:
+				padding: 0,10,0,0
+				spacing: 1
+				orientation: 'horizontal'
+	
+				# Labels Column #
+				BoxLayout:
+					spacing: 1
+					orientation: 'vertical'
+					size_hint_x: .09
+					
+					CustLabel2:
+		    			text: "Tracker: "
+		    		CustLabel2:
+		    			text: "Subject: "
+		    				
+		    		CustLabel2:
+		    			text: "Description: "
+		    			size_hint_y: 4
+	
+				# Inputs column #
+				BoxLayout:
+					spacing: 1
+					orientation: 'vertical'
+					
+					# Tracker dropdown #
+		    		BoxLayout:
+			    		__safe_id: [tracker_dropdown.__self__]
+			    			
+			    		Button:
+						    id: tracker_btn
+						    text: '-'
+						    on_release: tracker_dropdown.open(self)
+						    size_hint_y: None
+						    height: '48dp'
+						
+						Widget:
+						    on_parent: tracker_dropdown.dismiss()
+						
+						DropDown:
+						    id: tracker_dropdown
+						    on_select: tracker_btn.text = args[1]
+						
+						    Button:
+						        text: 'Data Problems'
+						        size_hint_y: None
+						        height: '48dp'
+						        on_release: tracker_dropdown.select('Data Problems')
+						
+						    Button:
+						        text: 'Support'
+						        size_hint_y: None
+						        height: '48dp'
+						        on_release: tracker_dropdown.select('Support')	
+	
+					TextInput:
+						text: ''
+						id: subject_id
+						write_tab: False
+						multiline: False
+						
+					TextInput:
+						size_hint_y: 4
+						text: ''
+						id: description_id
+						write_tab: False
+				
+			# Bottom section #	
+			BoxLayout:
+				padding: 0,10,0,0
+				spacing: 1
+				orientation: 'horizontal'
+				
+				# Left section #
+				BoxLayout:
+					orientation: 'horizontal'
+					
+					# Labels Column #
+					BoxLayout:
+						orientation: 'vertical'
+						spacing: 1
+						size_hint_x: 0.25
+						
+						CustLabel2:
+		    				text: "Status: "
+						CustLabel2:
+		    				text: "Category: "
+						CustLabel2:
+		    				text: "N: "
+		    			CustLabel2:
+		    				#size_hint_y: 2
+		    				text: "Image(s): "
+		    			CustLabel2:
+		    				text: "Link(s): "
+		    				
+					# Inputs Column #
+					BoxLayout:
+						spacing: 5
+						orientation: 'vertical'
+						background_color: (.1,.1,.1,1)
+					
+						# Status dropdown #	
+						BoxLayout:
+							spacing: 5
+							__safe_id: [status_dropdown.__self__]
+			    			
+			    			Button:
+						        id: status_btn
+						        text: '-'
+						        on_release: status_dropdown.open(self)
+						        size_hint_y: None
+						        height: '48dp'
+						        
+						
+						    Widget:
+						        on_parent: status_dropdown.dismiss()
+						
+						    DropDown:
+						
+						        id: status_dropdown
+						        on_select: status_btn.text = args[1]
+						
+						        Button:
+						            text: 'New'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: status_dropdown.select('New')
+						        Button:
+						            text: 'In Progress'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: status_dropdown.select('In Progress')
+						        Button:
+						            text: 'Resolved'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: status_dropdown.select('Resolved')
+						        Button:
+						            text: 'Closed'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: status_dropdown.select('Closed')
+						        Button:
+						            text: 'Rejected'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: status_dropdown.select('Rejected')
+						            
+						
+						# Category dropdown #	
+						BoxLayout:
+							spacing: 5
+							__safe_id: [category_dropdown.__self__]
+			    			
+			    			Button:
+						        id: category_btn
+						        text: '-'
+						        on_release: category_dropdown.open(self)
+						        size_hint_y: None
+						        height: '48dp'
+						
+						    Widget:
+						        on_parent: category_dropdown.dismiss()
+						
+						    DropDown:
+						        id: category_dropdown
+						        on_select: category_btn.text = args[1]
+						
+						        Button:
+						            text: 'Amplitudes'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: category_dropdown.select('Amplitudes')
+						        Button:
+						            text: 'Completeness'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: category_dropdown.select('Completeness')
+						        Button:
+						            text: 'Metadata'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: category_dropdown.select('Metadata')
+						        Button:
+						            text: 'Other'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: category_dropdown.select('Other')
+						        Button:
+						            text: 'Timing'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: category_dropdown.select('Timing')
+					
+						BoxLayout:
+							orientation: 'horizontal'
+							TextInput:
+								text: ''
+								id: ticket_net_id
+								write_tab: False
+								multiline: False
+							
+							CustLabel2:
+		    					text: "S: "
+		    					size_hint_x: .5
+		    					
+		    				TextInput:
+								text: ''
+								id: ticket_sta_id
+								write_tab: False
+								multiline: False	
+		    				
+		    				CustLabel2:
+		    					text: "L: "
+		    					size_hint_x: .5
+		    					
+		    				TextInput:
+								text: ''
+								id: ticket_loc_id
+								write_tab: False
+								multiline: False
+									
+		    				CustLabel2:
+		    					text: "C: "
+		    					size_hint_x: .5
+		    					
+							TextInput:
+								text: ''
+								id: ticket_chan_id
+								write_tab: False
+								multiline: False
+								
+						
+						BoxLayout:
+							orientation: 'vertical'
+							padding: 5
+							canvas:
+								Color:
+					            	rgba: (.9, .9, .9, 1)
+					        	Rectangle:
+					            	pos: self.pos
+					            	size: self.size			
+							ScrollView:
+								#size_hint_y: 2
+		    					Label:
+									text: ''
+									id: image_id
+									size_hint: None, None
+		        					size: self.texture_size
+		        					color: 0,0,0,1
+							
+
+						BoxLayout:
+							orientation: 'vertical'
+							padding: 5
+							canvas:
+								Color:
+					            	rgba: (.9, .9, .9, 1)
+					        	Rectangle:
+					            	pos: self.pos
+					            	size: self.size	
+					            	
+							ScrollView:
+								#size_hint_y: 2
+	    						Label:
+									text: ''
+									id: links_id
+									size_hint: None, None
+	        						size: self.texture_size
+	        						color: (0,0,0,1)
+						
+						#TextInput:
+						#	text: ''
+						#	id: links_id
+						#	write_tab: False
+						#	multiline: False
+					
+					
+					BoxLayout:
+						orientation: 'vertical'
+						spacing: 5
+						size_hint_x: 0.3
+						padding: 5,0,0,0
+						
+						
+						Widget:
+						Widget:
+						Widget:
+						CustomButton:
+							text: 'Add/View\nImage(s)'
+							on_release: root.image_popup()
+
+						CustomButton:
+							text: 'Add/Edit Link(s)'
+							on_release: root.link_popup()
+						
+						
+				# Right section #
+				BoxLayout:
+					spacing: 1
+					orientation: 'horizontal'
+	
+					# Labels Column #
+					BoxLayout:
+						spacing: 1
+						#padding: 10
+						orientation: 'vertical'
+						size_hint_x: 0.3
+						
+						CustLabel2:
+		    				text: "Start: "
+		    			CustLabel2:
+		    				text: "End: "
+		    			CustLabel2:
+		    				text: "Thresholds: "
+		    				size_hint_y: 4
+						
+					# Inputs Column #
+					BoxLayout:
+						spacing: 1
+						#padding: 5
+						orientation: 'vertical'
+						
+						TextInput:
+							text: ''
+							id: start_id
+							write_tab: False
+						TextInput:
+							text: ''
+							id: end_id
+							write_tab: False
+						
+						BoxLayout:
+							padding: 1,3,0,0
+							size_hint_y: 4
+							
+							BoxLayout:
+								spacing: 10
+								
+								Create_ticket_thresholds_RV:
+									id: newTicket_threholds_RV_id
+				                		
+							BoxLayout:
+								padding: 25,0,0,0
+								orientation: 'vertical'
+								Widget:
+								Widget:
+								Widget:
+								Widget:
+								CustomButton:
+									size_hint_x: .7
+									text: "Clear Selection"
+									on_release: root.clear_thresholds()
+			
+	
+	 		# Navigation row #
+			BoxLayout:
+				padding: 0,10,0,10
+				spacing: 1
+				orientation: "horizontal"
+				size_hint_y: .2
+		        
+				Button:
+					text: "Submit"
+					on_release: root.prep_ticket()
+				Button:
+					text: "Return"
+					on_release:
+						app.root.current = app.root.previous
+				Button:
+					text: "Exit QuARG"
+					on_release: root.exit_confirmation()
+					
+					
+<UpdateTicketScreen>:
+    
+    # Put ids here - future put an RV for threhsolds??
+    update_tracker_btn: update_tracker_btn
+    update_category_btn: update_category_btn
+    update_status_btn: update_status_btn
+        
+    update_subject: update_subject_id
+        
+    update_net: update_net_id
+    update_sta: update_sta_id
+    update_loc: update_loc_id
+    update_cha: update_chan_id
+    update_description: update_description_id
+    update_start: update_start_id
+    update_end: update_end_id
+    update_image: update_image_id
+    update_links: update_links_id
+    update_last_updated: update_last_updated_id
+    
+    updateTicket_thresholds_rv: updateTicket_thresholds_rv_id
+    
+    BoxLayout:
+    	orientation: 'vertical'
+    	padding: 10
+    	spacing: 10
+    
+		BoxLayout:
+			padding: 10,10,20,0
+			spacing: 1	
+			orientation: 'vertical'
+			canvas:
+	        	Color:
+	            	rgba: (.2, .2, .2, 1)
+	        	Rectangle:
+	            	pos: self.pos
+	            	size: self.size
+			
+			
+			# Top section #
+			BoxLayout:
+				padding: 0,10,0,0
+				spacing: 1
+				orientation: 'horizontal'
+	
+				# Labels Column #
+				BoxLayout:
+					spacing: 1
+					orientation: 'vertical'
+					size_hint_x: .09
+					
+					CustLabel2:
+		    			text: "Tracker: "
+		    		CustLabel2:
+		    			text: "Subject: "
+		    				
+		    		CustLabel2:
+		    			text: "Description: "
+		    			size_hint_y: 4
+	
+				# Inputs column #
+				BoxLayout:
+					spacing: 1
+					orientation: 'vertical'
+					
+					# Tracker dropdown #
+		    		BoxLayout:
+			    		__safe_id: [update_tracker_dropdown.__self__]
+			    			
+			    		Button:
+						    id: update_tracker_btn
+						    text: '-'
+						    on_release: update_tracker_dropdown.open(self)
+						    size_hint_y: None
+						    height: '48dp'
+						
+						Widget:
+						    on_parent: update_tracker_dropdown.dismiss()
+						
+						DropDown:
+						    id: update_tracker_dropdown
+						    on_select: update_tracker_btn.text = args[1]
+						
+						    Button:
+						        text: 'Data Problems'
+						        size_hint_y: None
+						        height: '48dp'
+						        on_release: update_tracker_dropdown.select('Data Problems')
+						
+						    Button:
+						        text: 'Support'
+						        size_hint_y: None
+						        height: '48dp'
+						        on_release: update_tracker_dropdown.select('Support')
+						        
+						BoxLayout:
+							padding: 20
+							orientation: 'horizontal'
+							
+							Label:
+							
+							CustLabel2:
+								id: update_last_updated_id
+								text: ''
+
+					TextInput:
+						text: ''
+						id: update_subject_id
+						write_tab: False
+						multiline: False
+						
+					TextInput:
+						size_hint_y: 4
+						text: ''
+						id: update_description_id
+						write_tab: False
+				
+			# Bottom section #	
+			BoxLayout:
+				padding: 0,10,0,0
+				spacing: 1
+				orientation: 'horizontal'
+				
+				# Left section #
+				BoxLayout:
+					#spacing: 1
+					orientation: 'horizontal'
+					
+					# Labels Column #
+					BoxLayout:
+						orientation: 'vertical'
+						spacing: 1
+						size_hint_x: 0.25
+						
+						CustLabel2:
+		    				text: "Status: "
+						CustLabel2:
+		    				text: "Category: "
+						CustLabel2:
+		    				text: "N: "
+		    			CustLabel2:
+		    				#size_hint_y: 2
+		    				text: "Image(s): "
+		    			CustLabel2:
+		    				text: "Link(s): "
+		    				
+					# Inputs Column #
+					BoxLayout:
+						spacing: 1
+						orientation: 'vertical'
+						background_color: (.1,.1,.1,1)
+					
+						# Status dropdown #	
+						BoxLayout:
+							spacing: 5
+							__safe_id: [update_status_dropdown.__self__]
+			    			
+			    			Button:
+						        id: update_status_btn
+						        text: '-'
+						        on_release: update_status_dropdown.open(self)
+						        size_hint_y: None
+						        height: '48dp'
+						        
+						
+						    Widget:
+						        on_parent: update_status_dropdown.dismiss()
+						
+						    DropDown:
+						
+						        id: update_status_dropdown
+						        on_select: update_status_btn.text = args[1]
+						
+						        Button:
+						            text: 'New'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: update_status_dropdown.select('New')
+						        Button:
+						            text: 'In Progress'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: update_status_dropdown.select('In Progress')
+						        Button:
+						            text: 'Resolved'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: update_status_dropdown.select('Resolved')
+						        Button:
+						            text: 'Closed'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: update_status_dropdown.select('Closed')
+						        Button:
+						            text: 'Rejected'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: update_status_dropdown.select('Rejected')
+						            
+						
+						# Category dropdown #	
+						BoxLayout:
+							spacing: 5
+							__safe_id: [update_category_dropdown.__self__]
+			    			
+			    			Button:
+						        id: update_category_btn
+						        text: '-'
+						        on_release: update_category_dropdown.open(self)
+						        size_hint_y: None
+						        height: '48dp'
+						
+						    Widget:
+						        on_parent: update_category_dropdown.dismiss()
+						
+						    DropDown:
+						        id: update_category_dropdown
+						        on_select: update_category_btn.text = args[1]
+						
+						        Button:
+						            text: 'Amplitudes'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: update_category_dropdown.select('Amplitudes')
+						        Button:
+						            text: 'Completeness'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: update_category_dropdown.select('Completeness')
+						        Button:
+						            text: 'Metadata'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: update_category_dropdown.select('Metadata')
+						        Button:
+						            text: 'Other'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: update_category_dropdown.select('Other')
+						        Button:
+						            text: 'Timing'
+						            size_hint_y: None
+						            height: '48dp'
+						            on_release: update_category_dropdown.select('Timing')
+					
+						BoxLayout:
+							orientation: 'horizontal'
+							TextInput:
+								text: ''
+								id: update_net_id
+								write_tab: False
+								multiline: False
+							
+							CustLabel2:
+		    					text: "S: "
+		    					size_hint_x: .5
+		    					
+		    				TextInput:
+								text: ''
+								id: update_sta_id
+								write_tab: False
+								multiline: False	
+		    				
+		    				CustLabel2:
+		    					text: "L: "
+		    					size_hint_x: .5
+		    					
+		    				TextInput:
+								text: ''
+								id: update_loc_id
+								write_tab: False
+								multiline: False
+									
+		    				CustLabel2:
+		    					text: "C: "
+		    					size_hint_x: .5
+		    					
+							TextInput:
+								text: ''
+								id: update_chan_id
+								write_tab: False
+								multiline: False
+								
+		
+						BoxLayout:
+							orientation: 'vertical'
+							padding: 5
+							canvas:
+								Color:
+					            	rgba: (.9, .9, .9, 1)
+					        	Rectangle:
+					            	pos: self.pos
+					            	size: self.size			
+							ScrollView:
+								#size_hint_y: 2
+		    					Label:
+									text: ''
+									id: update_image_id
+									size_hint: None, None
+		        					size: self.texture_size
+		        					color: 0,0,0,1
+							
+
+						BoxLayout:
+							orientation: 'vertical'
+							padding: 5
+							canvas:
+								Color:
+					            	rgba: (.9, .9, .9, 1)
+					        	Rectangle:
+					            	pos: self.pos
+					            	size: self.size	
+					            	
+							ScrollView:
+								#size_hint_y: 2
+	    						Label:
+									text: ''
+									id: update_links_id
+									size_hint: None, None
+	        						size: self.texture_size
+	        						color: (0,0,0,1)
+	
+				
+					
+					BoxLayout:
+						orientation: 'vertical'
+						spacing: 1
+						size_hint_x: 0.3
+						padding: 5
+						
+						Widget:
+						Widget:
+						Widget:
+						CustomButton:
+							text: 'Add/View Image(s)'
+							on_release: root.image_popup()
+						CustomButton:
+							text: 'Add/Edit Link(s)'
+							on_release: root.link_popup()
+						
+						
+				# Right section #
+				BoxLayout:
+					spacing: 1
+					orientation: 'horizontal'
+	
+					# Labels Column #
+					BoxLayout:
+						spacing: 1
+						#padding: 10
+						orientation: 'vertical'
+						size_hint_x: 0.3
+						
+						CustLabel2:
+		    				text: "Start: "
+		    			CustLabel2:
+		    				text: "End: "
+		    			CustLabel2:
+		    				text: "Thresholds: "
+		    				size_hint_y: 4
+						
+					# Inputs Column #
+					BoxLayout:
+						spacing: 1
+						#padding: 5
+						orientation: 'vertical'
+						
+						TextInput:
+							text: ''
+							id: update_start_id
+							write_tab: False
+						TextInput:
+							text: ''
+							id: update_end_id
+							write_tab: False
+						
+						BoxLayout:
+							padding: 1,3,0,0
+							size_hint_y: 4
+							
+							BoxLayout:
+								spacing: 10
+								
+								Update_ticket_thresholds_RV:
+									id: updateTicket_thresholds_rv_id	
+							
+				                		
+							BoxLayout:
+								padding: 25,0,0,0
+								orientation: 'vertical'
+								Widget:
+								Widget:
+								Widget:
+								Widget:
+								CustomButton:
+									size_hint_x: .7
+									text: "Clear Selection"
+									on_release: root.clear_thresholds()
+			
+	
+	 		# Navigation row #
+			BoxLayout:
+				padding: 0,10,0,10
+				spacing: 1
+				orientation: "horizontal"
+				size_hint_y: .2
+		        
+				Button:
+					text: "Update"
+					on_release: root.do_update()
+				Button:
+					text: "Delete Ticket"
+					on_release: root.do_delete()
+				Button:
+					text: "Return"
+					on_release:
+						root.find_tickets()	
+						root.manager.current = 'selectedTicketsScreen'
+						root.clear_ticket_fields()
+						
+				Button:
+					text: "Exit QuARG"
+					on_release: root.exit_confirmation()
+					
+					
+<SelectedTicketsScreen>:
+
+	ticket_list_rv: tickets_rv
+	header_label : header_label_id
+	
+	BoxLayout:
+		orientation: 'vertical'
+		padding: 10
+		spacing: 10
+		
+		BoxLayout:
+			#padding: 10,10,20,0
+			padding: 100, 50, 20, 50
+			spacing: 1	
+			orientation: 'vertical'
+			canvas:
+				Color:
+	            	rgba: (.2, .2, .2, 1)
+	        	Rectangle:
+	            	pos: self.pos
+	            	size: self.size
+	        
+	        CustLabel3:
+	        	text: ''
+	        	id: header_label_id
+	        	font_name:  'RobotoMono-Regular' 
+	        	font_size: '14sp'
+	        	size_hint_y: .1	
+	        	color: 1,1,1,1
+
+
+			Selected_tickets_RV:
+				id: tickets_rv
+		
+		BoxLayout:
+			padding: 0,10,0,10
+			spacing: 1
+			orientation: "horizontal"
+			size_hint_y: .08
+				
+			Button:
+				text: "Return"
+				on_release:
+					root.manager.current = 'mainScreen'
+
+			Button:
+				text: "Exit QuARG"
+				on_release: root.exit_confirmation()
+		

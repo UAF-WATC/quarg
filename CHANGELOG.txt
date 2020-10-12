@@ -1,0 +1,21 @@
+Beta Version 0.0.1
+- created QuARG
+
+Beta Version 0.0.2
+- Ability to read metrics from a local ISPAQ sqlite database file
+- Improved error handling for loading in an empty Issue File to Examine Issues Screen
+- Added Completeness Thresholds for Strong Motion instruments
+- Ability to add multiple images to a ticket, and to the report
+- Plots generated in Examine Issues are saved to quarg_plots, but only those that start with "tmp." are removed at close
+- If an image cannot be found, it no longer produces an empty icon in the report
+- Restructured the way that classes within python and between kivy and python pass information, allowing the following improvements:
+	- Issues automatically load into Examine Issues Screen now, no "Load Issue File" required
+	- Selected Tickets list automatically reflects changes to tickets made in the Update Ticket Screen. 
+- Added Thresholds Editor
+- Added Preferences Editor
+- Added in-app Help
+- Updated and improved documentation
+- Broke apart the Directory from the Issue and CSV files so that it was more obvious of where files would be written
+- Added popups with a list of all MUSTANG metrics and all defined thresholds in the Examine Issues screen
+- Popup if there is an error retrieving metrics during Find Issues
+- Changed definition of the 'dead' threshold to be dead_channel_gsn=1

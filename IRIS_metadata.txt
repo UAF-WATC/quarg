@@ -1,0 +1,17 @@
+Network
+Station
+Location
+Channel
+Latitude
+Longitude
+Elevation
+Depth
+Azimuth
+Dip
+SensorDescription
+Scale
+ScaleFreq
+ScaleUnits
+SampleRate
+StartTime
+EndTime
