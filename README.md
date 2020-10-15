@@ -62,7 +62,7 @@ become available, you can update QuARG by typing:
 
 ```
 cd quarg
-git pull origin master
+git pull origin main
 ```
 
 ### Install the Anaconda Environment
