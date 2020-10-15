@@ -173,10 +173,10 @@ for thresholdGroup in thresholdGroups:
 
     
     if hasMetrics:
-        print(channels)
         metricDF, failedMetrics = reportUtils.mergeMetricDF(network, station, location, channels, start, end, metrics, metricSource)
     else:
         metricDF = pd.DataFrame(columns=['value','target','start','end','network','station','location','channel'])
+        failedMetrics = list()
     
     for failedMetric in failedMetrics:
         if not failedMetric in failedMetricsAll:

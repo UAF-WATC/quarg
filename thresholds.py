@@ -1118,14 +1118,20 @@ def do_threshold(threshold, thresholdFile, metricDF, metaDF, outfile, instrument
                             for subDef in instDef:
                                 itype = ""  # assign a dummy itype, mostly for the metadata-only thresholds    
                                 if "average ::" in subDef:
-                                    chanMetricDF, chanMetaDF, itype = average_threshold(chanMetricDF, chanMetaDF, subDef)
-                                
+                                    try:
+                                        chanMetricDF, chanMetaDF, itype = average_threshold(chanMetricDF, chanMetaDF, subDef)
+                                    except Exception as e:
+                                        print("WARNING: Did not run because of %s" % e)
                                 elif "median ::" in subDef:
-                                    chanMetricDF, chanMetaDF, itype = median_threshold(chanMetricDF, chanMetaDF, subDef)
-                                 
+                                    try:
+                                        chanMetricDF, chanMetaDF, itype = median_threshold(chanMetricDF, chanMetaDF, subDef)
+                                    except Exception as e:
+                                        print("WARNING: Did not run because of %s" % e)
                                 elif "/" in subDef.split():
-                                    chanMetricDF, chanMetaDF, itype = ratio_threshold(chanMetricDF, chanMetaDF, subDef)
-                                    
+                                    try:
+                                        chanMetricDF, chanMetaDF, itype = ratio_threshold(chanMetricDF, chanMetaDF, subDef)
+                                    except Exception as e:
+                                        print("WARNING: Did not run because of %s" % e)
                                 else:
                                     # Could be 3 situations: 
                                     # metric operator value - simple

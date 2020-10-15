@@ -91,6 +91,7 @@ Config.set('input', 'mouse', 'mouse,disable_multitouch')
 ## SUGGESTIONS AND TODOs FROM HEATHER:
 # TODO: URL doesn't seem to cut and paste so you have to manually type it in
 # TODO: it would be awesome if you could cut & paste text in tickets
+# TODO: Sort tickets by station name when displaying list of tickets
 
 # OVERALL PROGRAM TODOS #
 # TODO: status bar at bottom of gui for output that's normally displayed on the command line?
@@ -219,24 +220,24 @@ class MainScreen(Screen):
 
 
     def warning_popup(self, txt):
+                
         popupContent = BoxLayout(orientation='vertical', spacing=10)
         popupContent.bind(minimum_height=popupContent.setter('height'))
         
-        warningLabel = Label(text=txt)
+        scrvw = ScrollView(size_hint_y=6)
+        threshLabel = Label(text=txt, size_hint_y=None)
+        threshLabel.bind(texture_size=threshLabel.setter('size'))
+        scrvw.add_widget(threshLabel)
         
         returnButton = Button(text="Return")
         returnButton.bind(on_release=self.dismiss_warning_popup)
 
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(warningLabel)
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(returnButton)
         
+        popupContent.add_widget(Label(size_hint_y=1.5))
+        popupContent.add_widget(scrvw)
+        popupContent.add_widget(Label(size_hint_y=1.5))
+        popupContent.add_widget(returnButton)
+              
         masterDict["warning_popup"] = Popup(title="Warning", content=popupContent, size_hint=(.66, .66))
         masterDict["warning_popup"].open()
 
@@ -1227,14 +1228,11 @@ class MainScreen(Screen):
         if whichOne == 0:
             helpText = '''QUICK INTRODUCTION TO QuARG
 
-This is a very simple overview of the use of QuARG. To see more detailed documentation,
-select one of the options below. 
+This is a very simple overview of the use of QuARG. Use the "Next" and "Previous" buttons
+to the right to scroll through the images and and short descriptions of each page. 
 
-"Introduction and Overview" will take you to a user-friendly form of the documentation, 
-where you can navigate to the particular section you are interested in and get a good
-feel for how to use QuARG. This is a good place to start when first using QuARG. 
-
-"Detailed Documentation" takes you to a page with a dense and detailed amount of information. 
+To see more detailed documentation, you can use the "Detailed Documentation" button below.  
+This takes you to a page with a dense and detailed amount of information. 
 It may be more difficult to digest, but you can do a control-find to narrow down your search.  
 This is good for very specific and particular questions about how to use QuARG. 
 
@@ -1251,10 +1249,12 @@ Each of those tabs corresponds to a step in the process of creating your Quality
         if whichOne == 1:
             helpText = '''FIND ISSUES
 
-  1. Navigate to and select your Preference File using the Browse button
+  1. Navigate to and select your Preference File using the Browse button - an example file 
+      preference_file_IRIS.py is provided in the base quarg/ directory
   2. Autofill the remaining fields from the Preference File
   3. Change any of the fields, if necessary - QuARG will use the values in the form over those in 
-      the Preference File
+      the Preference File. If you change the Directory field, use the Apply Changes button to propagate
+      that new directory to the other tabs so that you don't have to change in manually in each tab. 
   4. Hit the Find Issues button - this will write to the file specified by the Directory and Issue
       File fields
 
@@ -1488,7 +1488,7 @@ Each of those tabs corresponds to a step in the process of creating your Quality
         return helpText
      
     def open_detailed_documentation(self):
-        command = 'open documentation/README.html'
+        command = 'open documentation/DOCUMENTATION.html'
         os.system(command)
 
 class PreferencesScreen(Screen):
@@ -1791,22 +1791,22 @@ class PreferencesScreen(Screen):
         masterDict["_popup"].dismiss()
 
     def warning_popup(self, txt):
+        
         popupContent = BoxLayout(orientation='vertical', spacing=10)
         popupContent.bind(minimum_height=popupContent.setter('height'))
         
-        warningLabel = Label(text=txt)
+        scrvw = ScrollView(size_hint_y=6)
+        threshLabel = Label(text=txt, size_hint_y=None)
+        threshLabel.bind(texture_size=threshLabel.setter('size'))
+        scrvw.add_widget(threshLabel)
         
         returnButton = Button(text="Return")
         returnButton.bind(on_release=self.dismiss_warning_popup)
 
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(warningLabel)
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
+
+        popupContent.add_widget(Label(size_hint_y=.5))
+        popupContent.add_widget(scrvw)
+        popupContent.add_widget(Label(size_hint_y=.5))
         popupContent.add_widget(returnButton)
         
         masterDict["warning_popup"] = Popup(title="Warning", content=popupContent, size_hint=(.66, .66))
@@ -2291,24 +2291,25 @@ class ThresholdGroupsScreen(Screen):
         threshGroups_screen.thresholdGroupAndNames_rv._layout_manager.clear_selection()
         
     def warning_popup(self, txt):
+        
         popupContent = BoxLayout(orientation='vertical', spacing=10)
         popupContent.bind(minimum_height=popupContent.setter('height'))
         
-        warningLabel = Label(text=txt)
+        scrvw = ScrollView(size_hint_y=6)
+        threshLabel = Label(text=txt, size_hint_y=None)
+        threshLabel.bind(texture_size=threshLabel.setter('size'))
+        scrvw.add_widget(threshLabel)
         
         returnButton = Button(text="Return")
         returnButton.bind(on_release=self.dismiss_warning_popup)
 
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(warningLabel)
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
+
+        popupContent.add_widget(Label(size_hint_y=.5))
+        popupContent.add_widget(scrvw)
+        popupContent.add_widget(Label(size_hint_y=.5))
         popupContent.add_widget(returnButton)
         
+                
         masterDict["warning_popup"] = Popup(title="Warning", content=popupContent, size_hint=(.66, .66))
         masterDict["warning_popup"].open()
   
@@ -2346,19 +2347,18 @@ class ThresholdsScreen(Screen):
         popupContent = BoxLayout(orientation='vertical', spacing=10)
         popupContent.bind(minimum_height=popupContent.setter('height'))
         
-        warningLabel = Label(text=txt)
+        scrvw = ScrollView(size_hint_y=6)
+        threshLabel = Label(text=txt, size_hint_y=None)
+        threshLabel.bind(texture_size=threshLabel.setter('size'))
+        scrvw.add_widget(threshLabel)
         
         returnButton = Button(text="Return")
         returnButton.bind(on_release=self.dismiss_warning_popup)
-        
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(warningLabel)
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
+
+
+        popupContent.add_widget(Label(size_hint_y=.5))
+        popupContent.add_widget(scrvw)
+        popupContent.add_widget(Label(size_hint_y=.5))
         popupContent.add_widget(returnButton)
         
         masterDict["warning_popup"] = Popup(title="Warning", content=popupContent, size_hint=(.66, .66))
@@ -2536,7 +2536,8 @@ class ThresholdsScreen(Screen):
         additionContent.bind(minimum_height=additionContent.setter('height'))
         
         nameLabel = Label(text="Threshold Name: ", size_hint_x=.66)
-        self.thresholdTextInput = TextInput(id='thresholdNameID')
+#         self.thresholdTextInput = TextInput(id='thresholdNameID')
+        self.thresholdTextInput = TextInput()
 
         self.selectExistingThreshold = DropDown()
         for threshold in masterDict['threshold_names']:
@@ -2651,7 +2652,8 @@ class ThresholdsScreen(Screen):
         nameContent = BoxLayout( orientation='horizontal', spacing=10, size_hint_y=7)
         nameContent.bind(minimum_height=nameContent.setter('height'))
         nameLabel = Label(text="Name of new group: ")
-        self.groupTextInput = TextInput(id='groupNameID')
+#         self.groupTextInput = TextInput(id='groupNameID')
+        self.groupTextInput = TextInput()
         
         self.selectExisting = DropDown()
         for group in masterDict['instrument_groups']:
@@ -2678,11 +2680,12 @@ class ThresholdsScreen(Screen):
         col1.add_widget(Label(text="Channels: "))
         col1.add_widget(Label())
         
-        self.groupTextInput = TextInput(id='groupNameID')
-        self.netTextInput = TextInput()
-        self.staTextInput = TextInput()
-        self.locTextInput = TextInput()
-        self.chanTextInput = TextInput()
+#         self.groupTextInput = TextInput(id='groupNameID')
+        self.groupTextInput = TextInput()
+        self.netTextInput = TextInput(write_tab=False)
+        self.staTextInput = TextInput(write_tab=False)
+        self.locTextInput = TextInput(write_tab=False)
+        self.chanTextInput = TextInput(write_tab=False)
         
         col2.add_widget(Label())
         col2.add_widget(self.groupTextInput)
@@ -2775,7 +2778,8 @@ class ThresholdsScreen(Screen):
         additionContent.bind(minimum_height=additionContent.setter('height'))
         
         nameLabel = Label(text="Group Name: ", size_hint_x=.66)
-        self.thresholdGroupTextInput = TextInput(id='thresholdGroupID')
+#         self.thresholdGroupTextInput = TextInput(id='thresholdGroupID')
+        self.thresholdGroupTextInput = TextInput()
 
         self.selectExistingThresholdGroup = DropDown()
         for group in masterDict['thresholdGroups']:
@@ -3658,19 +3662,18 @@ class ExamineIssuesScreen(Screen):
         popupContent = BoxLayout(orientation='vertical', spacing=10)
         popupContent.bind(minimum_height=popupContent.setter('height'))
         
-        warningLabel = Label(text=txt)
+        scrvw = ScrollView(size_hint_y=6)
+        threshLabel = Label(text=txt, size_hint_y=None)
+        threshLabel.bind(texture_size=threshLabel.setter('size'))
+        scrvw.add_widget(threshLabel)
         
         returnButton = Button(text="Return")
         returnButton.bind(on_release=self.dismiss_warning_popup)
-        
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(warningLabel)
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
+
+
+        popupContent.add_widget(Label(size_hint_y=.5))
+        popupContent.add_widget(scrvw)
+        popupContent.add_widget(Label(size_hint_y=.5))
         popupContent.add_widget(returnButton)
         
         masterDict["warning_popup"] = Popup(title="Warning", content=popupContent, size_hint=(.66, .66))
@@ -3717,7 +3720,7 @@ class ExamineIssuesScreen(Screen):
                     self.df.loc[len(self.df)] = [state,issue,sncl, sn, startd, endd, days, value, notes, net, sta, loc, cha]
 
         except:
-            ExamineIssuesScreen.warning_popup(ExamineIssuesScreen,"WARNING:  No Issue File provided - Directory and Filename required")
+            ExamineIssuesScreen.warning_popup(ExamineIssuesScreen,"WARNING:  Unable to open Issue File. Either Directory and/or Filename were omitted, or the file does not exist.")
             
         self.df = self.df.sort_values(by=['SN','START'])  
   
@@ -4738,19 +4741,18 @@ class NewTicketScreen(Screen):
         popupContent = BoxLayout(orientation='vertical', spacing=10)
         popupContent.bind(minimum_height=popupContent.setter('height'))
         
-        warningLabel = Label(text=txt)
+        scrvw = ScrollView(size_hint_y=6)
+        threshLabel = Label(text=txt, size_hint_y=None)
+        threshLabel.bind(texture_size=threshLabel.setter('size'))
+        scrvw.add_widget(threshLabel)
         
         returnButton = Button(text="Return")
         returnButton.bind(on_release=self.dismiss_warning_popup)
-        
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(warningLabel)
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
+
+
+        popupContent.add_widget(Label(size_hint_y=.5))
+        popupContent.add_widget(scrvw)
+        popupContent.add_widget(Label(size_hint_y=.5))
         popupContent.add_widget(returnButton)
         
         masterDict["warning_popup"] = Popup(title="Warning", content=popupContent, size_hint=(.66, .66))
@@ -5287,19 +5289,18 @@ class UpdateTicketScreen(Screen):
         popupContent = BoxLayout(orientation='vertical', spacing=10)
         popupContent.bind(minimum_height=popupContent.setter('height'))
         
-        warningLabel = Label(text=txt)
+        scrvw = ScrollView(size_hint_y=6)
+        threshLabel = Label(text=txt, size_hint_y=None)
+        threshLabel.bind(texture_size=threshLabel.setter('size'))
+        scrvw.add_widget(threshLabel)
         
         returnButton = Button(text="Return")
         returnButton.bind(on_release=self.dismiss_warning_popup)
-        
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(warningLabel)
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
-        popupContent.add_widget(Label())
+
+
+        popupContent.add_widget(Label(size_hint_y=.5))
+        popupContent.add_widget(scrvw)
+        popupContent.add_widget(Label(size_hint_y=.5))
         popupContent.add_widget(returnButton)
         
         masterDict["warning_popup"] = Popup(title="Warning", content=popupContent, size_hint=(.66, .66))

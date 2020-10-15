@@ -172,7 +172,7 @@ def getMetrics(nets, stas, locs, chans, start, end, metric, metricSource, failed
         if metric == "dc_offset":
             print("ISPAQ does not run dc_offset, skipping.")
             DF = pd.DataFrame()
-            return DF
+            return DF, failedMetrics
         
         # ISPAQ is based on targets, not individual net/sta/loc/chan so need to put them all together
         targetList = []
