@@ -129,5 +129,5 @@ or
 <br /> 
 
 ## More Information
-More help can be found in the "Help" tab within QuARG. In addition, there is a file called README.html in the Documentation directory that has much more detailed information about using QuARG.  This file can be accessed through the Help Tab, as well. 
+More help can be found in the "Help" tab within QuARG. In addition, there is a file called DOCUMENTATION.html in the Documentation directory that has much more detailed information about using QuARG.  This file can be accessed through the Help Tab, as well. 
 
