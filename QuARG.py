@@ -954,7 +954,7 @@ class MainScreen(Screen):
                 try:
                     selected_tickets = pd.DataFrame(columns = allTickets.columns).drop(['networks', 'stations','locations','channels'], axis=1)   
                 except:
-                    selected_tickets = ""
+                    selected_tickets = pd.DataFrame(columns=['id','tracker','target','start_date','category','subject','thresholds','images','caption','links','status','end_date','description'])
             
             selected_tickets['target'] = selected_tickets['network'] + " " + selected_tickets['station'] + " " + selected_tickets['location'] + " " + selected_tickets['channel']
         
