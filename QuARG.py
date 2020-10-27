@@ -491,7 +491,7 @@ class MainScreen(Screen):
                 doGenerate = self.generate_csv()
                 if doGenerate == 1:
                     self.generate_report_pt2()
-        except Excpetion as e:
+        except Exception as e:
             self.warning_popup("Warning: could not generate final report")
         
     def do_find(self):
@@ -959,7 +959,7 @@ class MainScreen(Screen):
             selected_tickets['target'] = selected_tickets['network'] + " " + selected_tickets['station'] + " " + selected_tickets['location'] + " " + selected_tickets['channel']
         
         except:
-            selected_tickets = ""
+            selected_tickets = pd.DataFrame(columns=['id','tracker','target','start_date','category','subject','thresholds','images','caption','links','status','end_date','description'])
         
 
         sorted_tickets = selected_tickets[['id','tracker','target','start_date','category','subject','thresholds','images','caption','links','status','end_date','description']]
