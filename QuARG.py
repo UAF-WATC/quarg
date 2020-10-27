@@ -102,6 +102,7 @@ Config.set('input', 'mouse', 'mouse,disable_multitouch')
 # EXAMINE TAB TO-DOS #
 # TODO: have the 'metrics' populate as the ones involved with the selected threshold(s)? 
 # TODO: put a "See Tickets" button to pull up all tickets related to the specified target
+# TODO: add link to Mustangular in the resources column 
 
 # TICKETING TODOS #
 # TODO: put button on the "create ticket" screen that looks for existing tickets related to the selected target 
@@ -531,11 +532,27 @@ class MainScreen(Screen):
         # Check file for any failed metrics
         try:
             with open('failedMetrics.txt','r') as f:
-                self.failedMetrics = f.read()
+                self.failedMetrics = f.read().splitlines()
             os.remove('failedMetrics.txt')
             
+            
             if len(self.failedMetrics) > 0:
-                self.warning_popup("WARNING: There were errors retrieving the following metrics: \n%s" % self.failedMetrics)
+                failedMetricsList = list()
+                failedThresholdsList = list()
+                
+                for line in self.failedMetrics:
+                    if line.split(':')[0] == 'threshold':
+                        failedThresholdsList.append(line.split()[1])
+                    elif line.split(':')[0] == 'metric':
+                        failedMetricsList.append(line.split()[1])
+                
+                warningText = "WARNING: There were errors Finding Issues.\n\n"
+                if len(failedThresholdsList) > 0:
+                    warningText = warningText + "THRESHOLDS\nThese thresholds were not found - this is likely because the threshold has been deleted (through the Edit Thresholds form)\nbut not removed from this Preference File (in the Threshold Groups):\n    %s\n\n" % '\n    '.join(failedThresholdsList)
+                if len(failedMetricsList) > 0:
+                    warningText = warningText + "METRICS\nThese metrics were unable to be retrieved: \n    %s" % '\n    '.join(failedMetricsList)
+                 
+                self.warning_popup(warningText)
         except:
             self.warning_popup("WARNING: The temporary file failedMetrics.txt, used to track metric errors, is missing.\nThis may be because there was an error running FindIssues.py\nEither way, something seems to have gone wrong.")
  
@@ -1221,6 +1238,29 @@ class MainScreen(Screen):
         command = command + ' --metrics_file=' + masterDict['metrics_file']
         command = command + ' --thresholds_file=' + masterDict['thresholds_file']
         os.system(command)
+        
+        
+        # Provide a popup that indicates the success or failure of report generation
+        # generateHTML now produces a file that indicates anything that went wrong, if anything did
+        try:
+            with open('generateHTML_status.txt','r') as f:
+                self.generateReport_status = f.read()
+            os.remove('generateHTML_status.txt')
+            
+            print(self.generateReport_status)
+            
+            
+            if len(self.generateReport_status) > 0:
+                self.warning_popup("WARNING: There were errors generating the report: \n%s" % self.generateReport_status)
+            else:
+                self.warning_popup("Report successfully generated in %s" % (self.report_fullPath))
+                masterDict["warning_popup"].title = "Success"
+        except Exception as e:
+            print(e)
+            self.warning_popup("WARNING: The temporary file generateHTML_status.txt, used to track the status of generateHTML.py, is missing.\nThis may be because there was an error running generateHTML.py\nEither way, something seems to have gone wrong.")
+ 
+
+
 
     def help_text(self,whichOne):
 #         helpFile = 'documentation/simple_intro.txt'

@@ -147,6 +147,7 @@ metadataDF = reportUtils.getMetadata(network, station, location, channels, start
 
 
 failedMetricsAll = list()
+failedThresholdsAll = list()
 # thresholdFile = './groupsTEST.txt'
 for thresholdGroup in thresholdGroups:
     print()
@@ -159,7 +160,7 @@ for thresholdGroup in thresholdGroups:
     
     thresholdsList.sort()
     
-    allMetrics = thresholds.get_threshold_metrics(thresholdsList, thresholdFile)
+    allMetrics, failedThresholds = thresholds.get_threshold_metrics(thresholdsList, thresholdFile)
     metadatas = [e for e in metadataList if e in allMetrics]
     metrics = [e for e in metricsList if e in allMetrics]
 
@@ -178,17 +179,24 @@ for thresholdGroup in thresholdGroups:
         metricDF = pd.DataFrame(columns=['value','target','start','end','network','station','location','channel'])
         failedMetrics = list()
     
+    for failedThreshold in failedThresholds:
+        if not failedThreshold in failedThresholdsAll:
+            failedThresholdsAll.append(failedThreshold)
+    
     for failedMetric in failedMetrics:
         if not failedMetric in failedMetricsAll:
             failedMetricsAll.append(failedMetric)
     
 #     if hasMetrics == True and  not metricDF.empty:
     for threshold in thresholdsList:
-        thresholds.do_threshold(threshold, thresholdFile, metricDF, metadataDF, outfile, instruments, start, end, hasMetrics, chanTypes)
+        if not threshold in failedThresholds:
+            thresholds.do_threshold(threshold, thresholdFile, metricDF, metadataDF, outfile, instruments, start, end, hasMetrics, chanTypes)
 
-    with open('failedMetrics.txt','w') as f:
-        for failedMetric in failedMetricsAll:
-            f.write('%s\n' % failedMetric)
+with open('failedMetrics.txt','w') as f:
+    for failedThreshold in failedThresholdsAll:
+        f.write('threshold: %s\n' % failedThreshold)
+    for failedMetric in failedMetricsAll:
+        f.write('metric: %s\n' % failedMetric)
 
 print("INFO: Completed generating issue file")
 

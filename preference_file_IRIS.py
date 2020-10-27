@@ -29,12 +29,12 @@ station = '*'
 location = '*'
 channels = 'BH?,HH?'
 
-instruments = ['short period', 'strongmotion', 'broadband']
+instruments = ['strongmotion', 'short period', 'broadband']
 chanTypes = {'H': ('1', '2', 'E', 'N'), 'V': ('3', 'Z')}
 
 
 ## Report frequency: 
-reportFrequency = 'Monthly'
+reportFrequency = 'Weekly'
 [startday, endday, subdir] = reportUtils.calculate_dates(reportFrequency)    # Determines default start and end dates, directory for report
 
 # Metric source: either 'IRIS' or the path to the local sqlite database file that ISPAQ generated
@@ -42,7 +42,7 @@ metricSource = 'IRIS'
 metadataSource = 'IRIS'
 
 ## Thresholds:
-thresholdGroups = ['Completeness', 'Timing', 'Metadata', 'Amplitudes', 'State of Health']
+thresholdGroups = ['Completeness', 'State of Health', 'Timing', 'Amplitudes', 'Metadata']
 
 groupsDict = {'Amplitudes': ['avgSpikes', 'badResp', 'badResp2', 'dcOffsets', 'dead', 'flat', 'gainRatio', 'gainRatioB', 'hiAmp', 'lowAmp', 'lowRms', 'medianUnique', 'nSpikes', 'noise1', 'noise2', 'nonCoher', 'pegged', 'polarity', 'rmsRatio', 'rmsRatio_horiz', 'xTalk'], 'Completeness': ['avgGaps', 'gapsRatioGt12', 'noData'], 'Metadata': ['horDip', 'lowScale', 'nonMSUnits', 'zDip', 'zeroZ'], 'State of Health': ['ampSat', 'clip', 'filtChg', 'glitch', 'padding', 'spikes', 'tSync'], 'Timing': ['noTime', 'poorTQual', 'suspectTime']}
 
@@ -60,9 +60,9 @@ csvfilename = 'tickets.csv'
 csvfile = directory + csvfilename    # file to write tickets to, used to generate report in GENERATE REPORT tab
 
 ## Report Header Information:
-author = "Author Name"
-project = "Network or Project Name"
-email = "test@email.address"
+author = "Laura Keyson"
+project = "Testing"
+email = "test@iris.washington.edu"
 
 
 

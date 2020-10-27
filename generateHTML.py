@@ -366,71 +366,80 @@ def closeHTML():
 ######################
 # Create the Report
 
-printPreamble(network,dates,author,email,report_fullPath)
 
 
-# lastProject is used in case more than one network is included in the same report
-iFirst = 1; lastProject = ""
-
-# Create an empty dataframe to be filled by the csv file - not loading directly
-# because of the complcated description section
-issueDF = pd.read_csv(infile).fillna('')
-
-# The summary should be sorted by category
-summaryDF = issueDF.copy().sort_values(by=['category','target'])
-
-printFirstProject(project, summaryFile, detailFile);
-for index, row in summaryDF.iterrows():
-
-    
-    printTicketSummary(row['id'], row['category'], row['target'], \
-                       row['status'], row['start_date'], \
-                       row['subject'], summaryFile)
-
-# The detailed portion should be sorted by sncl
-detailDF = issueDF.copy()
-detailDF['Status'] = pd.Categorical(detailDF['status'], ["New", "In Progress", "Closed", "Resolved","Rejected"])
-detailDF = detailDF.sort_values(by=["Status","target"])
-
-for index, row in detailDF.iterrows():
-    #print(row['thresholds'])
-     
-    printTicketDetails(row['id'], row['target'], row['start_date'], \
-                       row['subject'], row['thresholds'], \
-                       row['description'], row['images'], row['caption'], \
-                       row['Status'], row['end_date'], row['links'],detailFile)
-
-closeSummary()
-
-
-# Combine the summary and detail files into one
-filenames = [summaryFile, detailFile]
-with open(report_fullPath, 'a+') as ofile:
-    for fname in filenames:
-        with open(fname) as infile:
-            ofile.write(infile.read())
-        
-closeHTML()
-
-# Remove the temporary summary and detail files
-os.remove(summaryFile)
-os.remove(detailFile) 
-
-
-# If we have images, make a new directory with all images and files, and zip
-# print(printTicketDetails.iFlag)
 try:
-    printTicketDetails.iFlag
-except:
-    pass
-else:
-    files = os.listdir(directory)
-
+    printPreamble(network,dates,author,email,report_fullPath)
     
-    shutil.make_archive(zipDir, 'zip', zipDir)
+    
+    # lastProject is used in case more than one network is included in the same report
+    iFirst = 1; lastProject = ""
+    
+    # Create an empty dataframe to be filled by the csv file - not loading directly
+    # because of the complcated description section
+    issueDF = pd.read_csv(infile).fillna('')
+    
+    # The summary should be sorted by category
+    summaryDF = issueDF.copy().sort_values(by=['category','target'])
+    
+    printFirstProject(project, summaryFile, detailFile);
+    for index, row in summaryDF.iterrows():
+    
+        
+        printTicketSummary(row['id'], row['category'], row['target'], \
+                           row['status'], row['start_date'], \
+                           row['subject'], summaryFile)
+    
+    # The detailed portion should be sorted by sncl
+    detailDF = issueDF.copy()
+    detailDF['Status'] = pd.Categorical(detailDF['status'], ["New", "In Progress", "Closed", "Resolved","Rejected"])
+    detailDF = detailDF.sort_values(by=["Status","target"])
+    
+    for index, row in detailDF.iterrows():
+        #print(row['thresholds'])
+         
+        printTicketDetails(row['id'], row['target'], row['start_date'], \
+                           row['subject'], row['thresholds'], \
+                           row['description'], row['images'], row['caption'], \
+                           row['Status'], row['end_date'], row['links'],detailFile)
+    
+    closeSummary()
+    
+    
+    # Combine the summary and detail files into one
+    filenames = [summaryFile, detailFile]
+    with open(report_fullPath, 'a+') as ofile:
+        for fname in filenames:
+            with open(fname) as infile:
+                ofile.write(infile.read())
+            
+    closeHTML()
+    
+    # Remove the temporary summary and detail files
+    os.remove(summaryFile)
+    os.remove(detailFile) 
+    
+    
+    # If we have images, make a new directory with all images and files, and zip
+    # print(printTicketDetails.iFlag)
+    try:
+        printTicketDetails.iFlag
+    except:
+        pass
+    else:
+        files = os.listdir(directory)
+    
+        
+        shutil.make_archive(zipDir, 'zip', zipDir)
+
+    with open('generateHTML_status.txt','w') as f:
+        f.write('')
+        print("Completed HTML report")  
+         
+except Exception as e:
+    with open('generateHTML_status.txt','w') as f:
+        f.write('%s' % e)
 
 
-
-
-print("Completed HTML report")
+    print("Error while generating HTML report")
      

@@ -48,13 +48,21 @@ def load_thresholdDicts(thresholdFile):
 
 def get_threshold_metrics(thresholds, thresholdFile):
     metrics = list()
+    failedThresholds = list()
+    
     thresholdDefDict, thresholdMetDict, instrumentGroupsDict = load_thresholdDicts(thresholdFile)
     
     for threshold in thresholds:
-        for metric in thresholdMetDict[threshold]:
-            metrics.append(metric)
+        try:
+            for metric in thresholdMetDict[threshold]:
+                metrics.append(metric)
+        except:
+            if threshold not in failedThresholds:
+                failedThresholds.append(threshold)
+            print("WARNING: Unable to understand threshold %s: the threshold has likely been deleted from the Edit Thresholds form, but not removed from this Preference File" % threshold)
+            
     metrics = list(set(metrics))
-    return metrics
+    return metrics, failedThresholds
 
 
 def load_metric_and_metadata():

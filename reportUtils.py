@@ -165,6 +165,8 @@ def getMetrics(nets, stas, locs, chans, start, end, metric, metricSource, failed
             if not metric in failedMetrics:
                 failedMetrics.append(metric)
             DF = pd.DataFrame()
+    
+    
     else:
         # then it must be a local database
         import sqlite3
