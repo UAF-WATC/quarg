@@ -4007,23 +4007,121 @@
 
 	ticket_list_rv: tickets_rv
 	header_label : header_label_id
+	ticket_order: ticket_order_id
 	
 	BoxLayout:
 		orientation: 'vertical'
 		padding: 10
 		spacing: 10
 		
+		canvas:
+			Color:
+	        	rgba: (.2, .2, .2, 1)
+	    	Rectangle:
+	        	pos: self.pos
+	        	size: self.size
+		
+		BoxLayout:
+			orientation: 'horizontal'
+			size_hint_y: 0.06
+			
+			CustLabel2:
+				text: "Selected Tickets"
+			Widget:
+				size_hint_x: 6
+			CustLabel2:
+				text: "Sort By:  "
+
+				
+			# Sort By dropdown #	
+			BoxLayout:
+				spacing: 5
+				
+				__safe_id: [ticket_sort.__self__]
+				
+				Button:
+			        id: ticket_order_id
+			        text: 'id'
+			        on_release: ticket_sort.open(self)
+			        size_hint_1: 1
+			        size_hint_x: 2
+			        
+			    Widget:
+			        on_parent: ticket_sort.dismiss()
+			
+			    DropDown:
+			
+			        id: ticket_sort
+			        on_select: ticket_order_id.text = args[1]
+					
+			        Button:
+			            text: 'id'
+			            size_hint_y: None
+			            height: '45dp'
+			            on_release: 
+			            	ticket_sort.select('id')
+							root.reload_sorted()
+			            
+			        Button:
+			            text: 'Target'
+			            size_hint_y: None
+			            height: '48dp'
+			            on_release: 
+			            	ticket_sort.select('Target')
+			            	root.reload_sorted()
+			        Button:
+			            text: 'Start Date'
+			            size_hint_y: None
+			            height: '48dp'
+			            on_release: 
+			            	ticket_sort.select('Start Date')
+			            	root.reload_sorted()
+			        Button:
+			            text: 'End Date'
+			            size_hint_y: None
+			            height: '48dp'
+			            on_release: 
+			            	ticket_sort.select('End Date')
+			            	root.reload_sorted()
+			        Button:
+			            text: 'Status'
+			            size_hint_y: None
+			            height: '48dp'
+			            on_release: 
+			            	ticket_sort.select('Status')
+			            	root.reload_sorted()
+			        Button:
+			            text: 'Tracker'
+			            size_hint_y: None
+			            height: '48dp'
+			            on_release: 
+			            	ticket_sort.select('Tracker')
+			            	root.reload_sorted()
+			        Button:
+			            text: 'Updated'
+			            size_hint_y: None
+			            height: '48dp'
+			            on_release: 
+			            	ticket_sort.select('Updated')
+			            	root.reload_sorted()
+			
+		Widget:
+        	id: separator
+        	size_hint_y: None
+        	height: 1
+			canvas:
+            	Color: 
+            		rgba: (7/255, 173/255, 212/255,1)
+            	Rectangle:
+                	pos: 20 , separator.center_y
+                	size: separator.width -20, 5
+			
 		BoxLayout:
 			#padding: 10,10,20,0
-			padding: 100, 50, 20, 50
+			padding: 100, 20, 20, 50
 			spacing: 1	
 			orientation: 'vertical'
-			canvas:
-				Color:
-	            	rgba: (.2, .2, .2, 1)
-	        	Rectangle:
-	            	pos: self.pos
-	            	size: self.size
+
 	        
 	        CustLabel3:
 	        	text: ''

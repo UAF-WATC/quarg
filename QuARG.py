@@ -27,12 +27,13 @@
 
 import kivy
 
-kivy.require("1.10.0")
+kivy.require("1.11.0")
 
 from kivy.config import Config
 Config.set('graphics', 'width', '1200')
 Config.set('graphics', 'height', '700')
 Config.set('graphics', 'resizable', 0)
+
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -554,7 +555,7 @@ class MainScreen(Screen):
                  
                 self.warning_popup(warningText)
         except:
-            self.warning_popup("WARNING: The temporary file failedMetrics.txt, used to track metric errors, is missing.\nThis may be because there was an error running FindIssues.py\nEither way, something seems to have gone wrong.")
+            self.warning_popup("WARNING: There was an error running FindIssues.py. Check the command line for more information.")
  
     def exit_confirmation(self,*kwargs):
         content = ExitDialog(exit=ExitDialog.do_exit, cancel=self.dismiss_popup)
@@ -746,58 +747,6 @@ class MainScreen(Screen):
     
     
     
-#     
-#         #### OLD CODE -- IF NEW CODE WORKS BETTER, THEN REMOVE THE BELOW CODE    
-#         if masterDict["query_status"] == "-":
-#             masterDict["query_status"] = ""
-#         if masterDict["query_cat"] == "-":
-#             masterDict["query_cat"] = ""
-#         if masterDict["query_tracker"] == "-":
-#             masterDict["query_tracker"] = ""
-#         # Turn the net, sta, loc, chans into a list of queries
-#         netList = list()
-#         for net in masterDict["query_nets"].split(','):
-#             if net == "*" or net == "" or net == "%":
-#                 net = "%"
-#             netList.append(net)
-#         netQuery = "' OR network like '".join(netList).replace('?',"_").replace('*',"%")
-#             
-#         staList = list()        
-#         for sta in masterDict["query_stas"].split(','):
-#             print("TEMP: %s " % sta)
-#             if sta == "*" or sta == "" or sta == "%":
-#                 sta = "%"
-#             staList.append(sta)
-#         staQuery = "' OR station like '".join(staList).replace('?',"_").replace('*',"%")
-#         
-#         locList = list()          
-#         for loc in masterDict["query_locs"].split(','):
-#             if loc == "*" or loc == "" or loc == "%":
-#                 loc = "%"
-#             locList.append(loc)            
-#         locQuery = "' OR location like '".join(locList).replace('?',"_").replace('*',"%")
-#         
-#         chanList = list()
-#         for chan in masterDict["query_chans"].split(','):
-#             print("TEMP: %s " % chan)
-#             if chan == "*" or chan == "" or chan == "%":
-#                 chan = "%"
-#             chanList.append(chan) 
-#         chanQuery = "' OR channel like '".join(chanList).replace('?',"_").replace('*',"%")
-# 
-#         # Create a query based on all of the inputs
-#         SQL = "SELECT * FROM tickets WHERE (network like '" + netQuery + "') "
-#         SQL = SQL + "AND (station like '" + staQuery + "')"
-#         SQL = SQL + "AND (location like '" + locQuery + "')"
-#         SQL = SQL + "AND (channel like '" + chanQuery + "')"
-# 
-#         if not masterDict["query_status"] == "":
-#             SQL = SQL + "AND status = '" + masterDict["query_status"] + "' "
-#         if not masterDict["query_tracker"] == "":
-#             SQL = SQL + "AND tracker = '" + masterDict["query_tracker"] +"' "
-#         if not masterDict["query_cat"] == "":
-#             SQL = SQL + "AND category = '" + masterDict["query_cat"] + "' "
-        
       
     
     def go_To_NewTickets(self, *kwargs):
@@ -1257,9 +1206,8 @@ class MainScreen(Screen):
                 masterDict["warning_popup"].title = "Success"
         except Exception as e:
             print(e)
-            self.warning_popup("WARNING: The temporary file generateHTML_status.txt, used to track the status of generateHTML.py, is missing.\nThis may be because there was an error running generateHTML.py\nEither way, something seems to have gone wrong.")
+            self.warning_popup("WARNING: There was an error running generateHTML.py. Check the command line for more information.")
  
-
 
 
     def help_text(self,whichOne):
@@ -1473,9 +1421,10 @@ Each of those tabs corresponds to a step in the process of creating your Quality
   supplied in the previous screen.  Each line is selectable, and clicking on one will take you to the 
   Update Ticket Screen where you can see the ticket and update or delete it if you want.
   
-  1. Select the ticket by clicking on it. 
+  1. (Optional) Use the dropdown in the top right to sort the tickets 
+  2. Select the ticket by clicking on it. 
   
-  That's it. 
+   
 '''
         
         if whichOne == 10:
@@ -4849,7 +4798,9 @@ class NewTicketScreen(Screen):
         if len(masterDict["imageList"]) > 0:
             image_id=0
             for row in masterDict["imageList"]:
-                b = ToggleButton(text = row, size_hint_y = None, halign = 'left', id=str(image_id),
+#                 b = ToggleButton(text = row, size_hint_y = None, halign = 'left', id=str(image_id),
+#                                 background_color = (.5,.5,.5,1), group='imageButtons')
+                b = ToggleButton(text = row, size_hint_y = None, halign = 'left',
                                 background_color = (.5,.5,.5,1), group='imageButtons')
                 b.bind(state=self.check_image)
                  
@@ -4878,7 +4829,8 @@ class NewTicketScreen(Screen):
         upperLayout.add_widget(actionButtons)
         
         captionBox = BoxLayout(orientation='horizontal', size_hint_y=0.25)
-        self.captionInput = TextInput(text="", id='captionID')
+#         self.captionInput = TextInput(text="", id='captionID')
+        self.captionInput = TextInput(text="")
         self.captionInput.bind()
         captionBox.add_widget(self.captionInput)
         
@@ -4960,7 +4912,9 @@ class NewTicketScreen(Screen):
         if len(masterDict["linkList"]) > 0:
             link_id=0
             for row in masterDict["linkList"]:
-                b = ToggleButton(text = row, size_hint_y = None, halign = 'left', id=str(link_id),
+#                 b = ToggleButton(text = row, size_hint_y = None, halign = 'left', id=str(link_id),
+#                                 background_color = (.5,.5,.5,1), group='imageButtons')
+                b = ToggleButton(text = row, size_hint_y = None, halign = 'left',
                                 background_color = (.5,.5,.5,1), group='imageButtons')
                 b.bind(state=self.check_link)
                  
@@ -4987,7 +4941,8 @@ class NewTicketScreen(Screen):
         upperLayout.add_widget(actionButtons)
         
         captionBox = BoxLayout(orientation='horizontal', size_hint_y=0.25)
-        self.linkInput = TextInput(text="", id='linkID')
+#         self.linkInput = TextInput(text="", id='linkID')
+        self.linkInput = TextInput(text="")
         self.linkInput.bind()
         captionBox.add_widget(self.linkInput)
         
@@ -5478,7 +5433,9 @@ class UpdateTicketScreen(Screen):
         if len(masterDict["imageList"]) > 0:
             image_id=0
             for row in masterDict["imageList"]:
-                b = ToggleButton(text = row, size_hint_y = None, halign = 'left', id=str(image_id),
+#                 b = ToggleButton(text = row, size_hint_y = None, halign = 'left', id=str(image_id),
+#                                 background_color = (.5,.5,.5,1), group='imageButtons')
+                b = ToggleButton(text = row, size_hint_y = None, halign = 'left',
                                 background_color = (.5,.5,.5,1), group='imageButtons')
                 b.bind(state=self.check_image)
                  
@@ -5507,7 +5464,8 @@ class UpdateTicketScreen(Screen):
         upperLayout.add_widget(actionButtons)
         
         captionBox = BoxLayout(orientation='horizontal', size_hint_y=0.25)
-        self.captionInput = TextInput(text="", id='captionID')
+#         self.captionInput = TextInput(text="", id='captionID')
+        self.captionInput = TextInput(text="")
         self.captionInput.bind()
         captionBox.add_widget(self.captionInput)
         
@@ -5589,7 +5547,9 @@ class UpdateTicketScreen(Screen):
         if len(masterDict["linkList"]) > 0:
             link_id=0
             for row in masterDict["linkList"]:
-                b = ToggleButton(text = row, size_hint_y = None, halign = 'left', id=str(link_id),
+#                 b = ToggleButton(text = row, size_hint_y = None, halign = 'left', id=str(link_id),
+#                                 background_color = (.5,.5,.5,1), group='imageButtons')
+                b = ToggleButton(text = row, size_hint_y = None, halign = 'left',
                                 background_color = (.5,.5,.5,1), group='imageButtons')
                 b.bind(state=self.check_link)
                  
@@ -5618,7 +5578,8 @@ class UpdateTicketScreen(Screen):
         upperLayout.add_widget(actionButtons)
         
         captionBox = BoxLayout(orientation='horizontal', size_hint_y=0.25)
-        self.linkInput = TextInput(text="", id='linkID')
+#         self.linkInput = TextInput(text="", id='linkID')
+        elf.linkInput = TextInput(text="")
         self.linkInput.bind()
         captionBox.add_widget(self.linkInput)
         
@@ -5847,6 +5808,7 @@ class SelectedTicketsScreen(Screen):
     ticket_list_rv = ObjectProperty()
     selected_ticket = ''
     header_label = ObjectProperty()
+    ticket_order = ObjectProperty()
     theseTickets = pd.DataFrame()
 
     def exit_confirmation(self,*kwargs):
@@ -5860,21 +5822,34 @@ class SelectedTicketsScreen(Screen):
 
     def go_to_selectedTickets(self):
         tickets_screen = screen_manager.get_screen('selectedTicketsScreen')
-        spacing_dict = {0:6, 1:15, 2: 12, 3: 12, 4: 30, 5: 18, 6: 14, 7: 10}
+        
+        spacing_dict = {0:6, 1:22, 2: 12, 3: 12, 4: 30, 5: 18, 6: 14, 7: 10}
         try:
+            try:
+                masterDict['ticket_order']
+                
+            except:
+                masterDict['ticket_order'] = 'id'
+            else:
+                masterDict['ticket_order'] = tickets_screen.ticket_order.text.lower().replace(" ", "_")
+            
             self.theseTickets = masterDict['tickets']
             self.theseTickets['target'] = self.theseTickets['network'] + '.' + self.theseTickets['station'] + '.' + self.theseTickets['location'] + '.' + self.theseTickets['channel']
+            
+
+            self.theseTickets = self.theseTickets.sort_values(by=[masterDict['ticket_order']]).reset_index(drop=True)            
+            
             ticketList = list()
-            
-            
+ 
             for id, row in self.theseTickets.iterrows():
                 row_sub = [str(row['id']), row['target'], row['start_date'],row['end_date'], row['subject'], row['status'], row['tracker'], row['updated']]
-                row_sub = [row_sub[y].ljust(spacing_dict[y])[0:spacing_dict[y]] for y in range(len(row_sub))]
+                row_sub = [row_sub[y].ljust(spacing_dict[y])[0:spacing_dict[y]]  for y in range(len(row_sub))]
                 label = '  '.join(row_sub)
                 ticketList.append({'text': label})
-    
+     
             tickets_screen.ticket_list_rv.data = ticketList 
-        except:
+        except Exception as e:
+            print("Warning: could not retrieve tickets - %s" % e)
             tickets_screen.ticket_list_rv.data = ''
             
         header_list = ['id', 'Target','Start Date', 'End Date','Subject','Status','Tracker','Updated']
@@ -5882,7 +5857,8 @@ class SelectedTicketsScreen(Screen):
         header_text = '  '.join(header_list)
         tickets_screen.header_label.text = header_text
 
-
+    def reload_sorted(self):   
+        MainScreen.find_tickets(MainScreen)
 
 
 # ####################
@@ -6396,7 +6372,6 @@ class selected_tickets_SelectableLabel(RecycleDataViewBehavior, Label):
             try:
                 ### THIS DOESN"T FIX THE PROBLEM ###
                 SelectedTicketsScreen.selected_ticket = SelectedTicketsScreen.theseTickets.iloc[[index]]
-                                
                 screen_manager.current = 'updateTicketsScreen'
                 UpdateTicketScreen.load_ticket_information(UpdateTicketScreen)
 
