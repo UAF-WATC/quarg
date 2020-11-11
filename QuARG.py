@@ -78,7 +78,6 @@ import requests     # used for getting empty transfer_function returns
 
 import reportUtils
 
-
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
 
 
@@ -5579,7 +5578,7 @@ class UpdateTicketScreen(Screen):
         
         captionBox = BoxLayout(orientation='horizontal', size_hint_y=0.25)
 #         self.linkInput = TextInput(text="", id='linkID')
-        elf.linkInput = TextInput(text="")
+        self.linkInput = TextInput(text="")
         self.linkInput.bind()
         captionBox.add_widget(self.linkInput)
         
