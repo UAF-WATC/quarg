@@ -58,6 +58,8 @@ from kivy.uix.behaviors import FocusBehavior
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.clock import Clock
 from kivy.uix.dropdown import DropDown
+from kivy.graphics import Color, Rectangle
+
 
 import os
 import datetime
@@ -83,19 +85,15 @@ Config.set('input', 'mouse', 'mouse,disable_multitouch')
 
 # PREFERENCE FILE TODOS #
 
-## TODOS FOR this go round
-# TODO: If I call on the ObjectProperty version of the properties, do I even need the get_*_inputs() function at all? Or will those update as soon as the field updates in the gui?
-# TODO: hold onto polarity_check's snql2 and display in the examine issues screen?
-# TODO: Change the thresholds list popup (all defined thresholds) in the Thresholds Page to be text input so that user can select them, just like in the Examine Issues page)
-
-## SUGGESTIONS AND TODOs FROM HEATHER:
-# TODO: URL doesn't seem to cut and paste so you have to manually type it in
-# TODO: it would be awesome if you could cut & paste text in tickets
-# TODO: Sort tickets by station name when displaying list of tickets
-
 # OVERALL PROGRAM TODOS #
 # TODO: status bar at bottom of gui for output that's normally displayed on the command line?
 # TODO: add a targets list as an option?
+# TODO: If I call on the ObjectProperty version of the properties, do I even need the get_*_inputs() function at all? Or will those update as soon as the field updates in the gui?
+
+
+# THRESHOLDS #
+# TODO: Change the thresholds list popup (all defined thresholds) in the Thresholds Page to be text input so that user can select them, just like in the Examine Issues page)
+
 
 # FIND ISSUES TODOS#
 
@@ -103,6 +101,8 @@ Config.set('input', 'mouse', 'mouse,disable_multitouch')
 # TODO: have the 'metrics' populate as the ones involved with the selected threshold(s)? 
 # TODO: put a "See Tickets" button to pull up all tickets related to the specified target
 # TODO: add link to Mustangular in the resources column 
+# TODO: hold onto polarity_check's snql2 and display in the examine issues screen?
+
 
 # TICKETING TODOS #
 # TODO: put button on the "create ticket" screen that looks for existing tickets related to the selected target 
@@ -4797,15 +4797,13 @@ class NewTicketScreen(Screen):
         if len(masterDict["imageList"]) > 0:
             image_id=0
             for row in masterDict["imageList"]:
-#                 b = ToggleButton(text = row, size_hint_y = None, halign = 'left', id=str(image_id),
-#                                 background_color = (.5,.5,.5,1), group='imageButtons')
                 b = ToggleButton(text = row, size_hint_y = None, halign = 'left',
                                 background_color = (.5,.5,.5,1), group='imageButtons')
                 b.bind(state=self.check_image)
                  
                 image_layout.add_widget(b)
                 image_id += 1
-#         
+        
             # The notes (in a box layout) go into a ScrollView
             scrl = ScrollView(size_hint_y=4)
             scrl.add_widget(image_layout)
@@ -4823,20 +4821,54 @@ class NewTicketScreen(Screen):
         actionButtons.add_widget(Button(text="Remove image", on_release=self.remove_images))
         for i in range(4):
             actionButtons.add_widget(Label())
-        actionButtons.add_widget(Button(text="Add caption", on_release=self.add_caption))
         
         upperLayout.add_widget(actionButtons)
         
-        captionBox = BoxLayout(orientation='horizontal', size_hint_y=0.25)
-#         self.captionInput = TextInput(text="", id='captionID')
+        
+        labelLayout = BoxLayout(orientation='vertical', size_hint_y=0.1)
+        labelsBox = BoxLayout(orientation='horizontal')
+        label1 =  Label(text="Existing Caption:", size_hint=(1.0, 1.0), halign="left", valign="middle")
+        label1.bind(size=label1.setter('text_size'))    
+        labelsBox.add_widget(label1)
+        
+        label2 = Label(text="New Caption:", size_hint=(1.0, 1.0), halign="left", valign="middle")
+        label2.bind(size=label2.setter('text_size'))   
+        labelsBox.add_widget(label2) 
+
+        labelLayout.add_widget(labelsBox)
+        
+        
+        captionBox = BoxLayout(orientation='horizontal', size_hint_y=0.2)
+        
+        # Label of existing caption text, and copy-the-text-to-the-input button
+        captionLabelBox = BoxLayout(orientation='horizontal',padding=10, spacing=5)
+        scrvw = ScrollView()
+        
+        self.captionLabel = Label(text="", size_hint_y=None, halign='left')
+        self.captionLabel.bind(width=lambda S, W:
+                   S.setter('text_size')(S, (W, None)),
+                    texture_size=self.captionLabel.setter('size'))
+        
+        scrvw.add_widget(self.captionLabel)
+        
+        captionLabelBox.add_widget(scrvw)
+        captionLabelBox.add_widget(Button(text="Copy\nCaption", on_release=self.copy_caption, size_hint_x=0.25 ))
+        
+        # Text input for adding new caption, and the Add caption button
+        captionInputBox = BoxLayout(orientation='horizontal',padding=10, spacing=5)
         self.captionInput = TextInput(text="")
         self.captionInput.bind()
-        captionBox.add_widget(self.captionInput)
+        captionInputBox.add_widget(self.captionInput)
+        captionInputBox.add_widget(Button(text="Add caption", on_release=self.add_caption, size_hint_x=0.25))
+        
+        captionBox.add_widget(captionLabelBox)
+        captionBox.add_widget(captionInputBox)
         
         navButtons=BoxLayout(orientation='horizontal', size_hint_y=None, height=100, padding=(0,10,0,0), spacing=5)
         navButtons.add_widget(Button(text="Return", on_release=self.dismiss_image_popup))
 
         masterDict["image_content"].add_widget(upperLayout)
+        masterDict["image_content"].add_widget(labelLayout)
         masterDict["image_content"].add_widget(captionBox)
         masterDict["image_content"].add_widget(navButtons)
         
@@ -4848,36 +4880,48 @@ class NewTicketScreen(Screen):
         if state == "down":
             if image.text not in self.selectedImages:
                 self.selectedImages.append(image.text)
-                self.captionInput.text = masterDict['imageList'][self.selectedImages[0]]
+                self.captionLabel.text = masterDict['imageList'][self.selectedImages[0]]
+#                 self.captionInput.text = masterDict['imageList'][self.selectedImages[0]]
             
         else:
             self.selectedImages = [v for v in self.selectedImages if v != image.text]
+            self.captionLabel.text = ""
 
     def open_image(self, *kwargs):
         for file in self.selectedImages:
             try:
                 subprocess.run(['open', file], check=True)
             except Exception as e:
-                print("WARNING: Unable to open %s: %s" %(file, e))
+                self.warning_popup("WARNING: Unable to open %s: %s" %(file, e))
+#                 print("WARNING: Unable to open %s: %s" %(file, e))
   
     def remove_images(self, *kwargs):
         for file in self.selectedImages:
             try:
                 del masterDict['imageList'][file]
             except KeyError as e:
-                print("WARNING: File not found in list - %s" % e)
+                self.warning_popup("WARNING: File not found in list - %s" % e)
+#                 print("WARNING: File not found in list - %s" % e)
             
             self.selectedImages = [v for v in self.selectedImages if v != file]
             
         self.dismiss_image_popup()
         self.image_popup()
         self.ids.image_id.text = "\n".join([i.split('/')[-1] for i in masterDict["imageList"]])
+   
+    def copy_caption(self, *kwargs):
+        self.captionInput.text = self.captionLabel.text
         
     def add_caption(self, button, *kwargs):
         try:
             masterDict['imageList'][self.selectedImages[0]] = self.captionInput.text
+            self.captionLabel.text = masterDict['imageList'][self.selectedImages[0]]
             print("INFO: Caption added")
         except Exception as e:
+            if str(e) == "list index out of range":
+                self.warning_popup("WARNING: could not add caption to file - no image selected")
+            else:
+                self.warning_popup("WARNING: could not add caption to file - %s" % e)
             print("WARNING: could not add caption to file -- %s" % e)
   
     def image_load(self, *kwargs):
@@ -5432,8 +5476,6 @@ class UpdateTicketScreen(Screen):
         if len(masterDict["imageList"]) > 0:
             image_id=0
             for row in masterDict["imageList"]:
-#                 b = ToggleButton(text = row, size_hint_y = None, halign = 'left', id=str(image_id),
-#                                 background_color = (.5,.5,.5,1), group='imageButtons')
                 b = ToggleButton(text = row, size_hint_y = None, halign = 'left',
                                 background_color = (.5,.5,.5,1), group='imageButtons')
                 b.bind(state=self.check_image)
@@ -5458,20 +5500,54 @@ class UpdateTicketScreen(Screen):
         actionButtons.add_widget(Button(text="Remove image", on_release=self.remove_images))
         for i in range(4):
             actionButtons.add_widget(Label())
-        actionButtons.add_widget(Button(text="Add caption", on_release=self.add_caption))
         
         upperLayout.add_widget(actionButtons)
         
-        captionBox = BoxLayout(orientation='horizontal', size_hint_y=0.25)
-#         self.captionInput = TextInput(text="", id='captionID')
+        
+        labelLayout = BoxLayout(orientation='vertical', size_hint_y=0.1)
+        labelsBox = BoxLayout(orientation='horizontal')
+        label1 =  Label(text="Existing Caption:", size_hint=(1.0, 1.0), halign="left", valign="middle")
+        label1.bind(size=label1.setter('text_size'))    
+        labelsBox.add_widget(label1)
+        
+        label2 = Label(text="New Caption:", size_hint=(1.0, 1.0), halign="left", valign="middle")
+        label2.bind(size=label2.setter('text_size'))   
+        labelsBox.add_widget(label2) 
+
+        labelLayout.add_widget(labelsBox)
+        
+        
+        captionBox = BoxLayout(orientation='horizontal', size_hint_y=0.2)
+        
+        # Label of existing caption text, and copy-the-text-to-the-input button
+        captionLabelBox = BoxLayout(orientation='horizontal',padding=10, spacing=5)
+        scrvw = ScrollView()
+        
+        self.captionLabel = Label(text="", size_hint_y=None, halign='left')
+        self.captionLabel.bind(width=lambda S, W:
+                   S.setter('text_size')(S, (W, None)),
+                    texture_size=self.captionLabel.setter('size'))
+        
+        scrvw.add_widget(self.captionLabel)
+        
+        captionLabelBox.add_widget(scrvw)
+        captionLabelBox.add_widget(Button(text="Copy\nCaption", on_release=self.copy_caption, size_hint_x=0.25 ))
+        
+        # Text input for adding new caption, and the Add caption button
+        captionInputBox = BoxLayout(orientation='horizontal',padding=10, spacing=5)
         self.captionInput = TextInput(text="")
         self.captionInput.bind()
-        captionBox.add_widget(self.captionInput)
+        captionInputBox.add_widget(self.captionInput)
+        captionInputBox.add_widget(Button(text="Add caption", on_release=self.add_caption, size_hint_x=0.25))
+        
+        captionBox.add_widget(captionLabelBox)
+        captionBox.add_widget(captionInputBox)
         
         navButtons=BoxLayout(orientation='horizontal', size_hint_y=None, height=100, padding=(0,10,0,0), spacing=5)
         navButtons.add_widget(Button(text="Return", on_release=self.dismiss_image_popup))
-        
+
         masterDict["image_content"].add_widget(upperLayout)
+        masterDict["image_content"].add_widget(labelLayout)
         masterDict["image_content"].add_widget(captionBox)
         masterDict["image_content"].add_widget(navButtons)
         
@@ -5479,14 +5555,16 @@ class UpdateTicketScreen(Screen):
                             size_hint=(0.9, 0.9))
         masterDict["image_popup"].open()
 
+
     def check_image(self, image, state):
         if state == "down":
             if image.text not in self.selectedImages:
                 self.selectedImages.append(image.text)
-                self.captionInput.text = masterDict['imageList'][self.selectedImages[0]]
+                self.captionLabel.text = masterDict['imageList'][self.selectedImages[0]]
              
         else:
             self.selectedImages = [v for v in self.selectedImages if v != image.text]
+            self.captionLabel.text = ""
 
     def open_image(self, *kwargs):
         for file in self.selectedImages:
@@ -5507,13 +5585,22 @@ class UpdateTicketScreen(Screen):
         self.dismiss_image_popup()
         self.image_popup()
         self.ids.update_image_id.text = "\n".join([i.split('/')[-1] for i in masterDict["imageList"]])
+    
+    def copy_caption(self, *kwargs):
+        self.captionInput.text = self.captionLabel.text
         
     def add_caption(self, button, *kwargs):
         try:
             masterDict['imageList'][self.selectedImages[0]] = self.captionInput.text
+            self.captionLabel.text = masterDict['imageList'][self.selectedImages[0]]
             print("INFO: Caption added")
         except Exception as e:
+            if str(e) == "list index out of range":
+                self.warning_popup("WARNING: could not add caption to file - no image selected")
+            else:
+                self.warning_popup("WARNING: could not add caption to file - %s" % e)
             print("WARNING: could not add caption to file -- %s" % e)
+        
 
     def image_load(self, *kwargs):
         content = LoadDialog(load=self.load_image, cancel=self.dismiss_popup)
