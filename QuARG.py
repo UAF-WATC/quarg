@@ -1210,7 +1210,6 @@ class MainScreen(Screen):
 
 
     def help_text(self,whichOne):
-#         helpFile = 'documentation/simple_intro.txt'
         
         if whichOne == 0:
             helpText = '''QUICK INTRODUCTION TO QuARG
@@ -1476,7 +1475,7 @@ Each of those tabs corresponds to a step in the process of creating your Quality
         return helpText
      
     def open_detailed_documentation(self):
-        command = 'open documentation/DOCUMENTATION.html'
+        command = 'open docs/DOCUMENTATION.html'
         os.system(command)
 
 class PreferencesScreen(Screen):
