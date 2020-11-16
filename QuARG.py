@@ -21,7 +21,8 @@
 """
 
 
-
+version='1.0.0'
+print("QuARG version %s" % version)
 
 #TODO: Need to include MS Gothic.ttf when packaging the scripts 
 
