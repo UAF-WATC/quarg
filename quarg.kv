@@ -1954,9 +1954,6 @@
 									halign: 'center'
 									valign: 'bottom'
 									
-								#CustTextInput:
-								#	text: './thresholds.txt'
-								#	id: pref_thresh_id
 								CustTextInput:
 									text: './'
 									id: pref_dir_id
@@ -1989,15 +1986,11 @@
 								Widget:	
 								Widget:
 								Widget:
-								#Button:
-								#	text: 'Browse'
-								#	on_release: root.thresh_file_load()
 								Button:
 									text: 'Browse'
 									on_release: root.working_dir_load()
 								Widget:
 								Widget:
-								#Widget:
 								
 								
 						# Second Column	
@@ -2011,7 +2004,7 @@
 								text: "Instrument Groups (select all to be included):"
 							Preference_Instruments_RV:
 								id: instrument_list_rv_id
-								size_hint_y: 3
+								size_hint_y: 4
 							
 								
 							Widget:
@@ -2020,7 +2013,7 @@
 							Preference_ThresholdGroups_RV:
 								id: thresholdGroups_list_rv_id
 								#text: 'Threshold Groups RV (Amplitudes, etc)'
-								size_hint_y: 3
+								size_hint_y: 5
 								
 							Widget:
 							CustLabel3:

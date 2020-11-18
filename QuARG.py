@@ -325,7 +325,7 @@ class MainScreen(Screen):
         self.generate_end_before = self.ids.generate_end_before_id.state
         
         # These are the target constraings for creating a csv internally
-        self.generate_network = main_screen.generate_net.text
+        self.generate_network = ','.join([x.strip() for x in main_screen.generate_net.text.split(',')])
         self.generate_station = main_screen.generate_sta.text
         self.generate_location = main_screen.generate_loc.text
         self.generate_channel = main_screen.generate_cha.text
@@ -929,119 +929,7 @@ class MainScreen(Screen):
         
         return 1
     
-        
-        
-        
-        
-        
-        
-        
-        
-#         
-#         #### OLD CODE BELOW, DELETE ONCE ABOVE IS WORKING PROPERLY
-#         
-#         self.get_generate_inputs()
-#         
-#         if self.csv == "":
-#             self.warning_popup("WARNING: CSV File required")
-#             return 0
-#     
-#         if self.generate_directory == "":
-#             self.warning_popup("WARNING: CSV Directory required")
-#             return 0
-#         
-#         with open(self.preference) as f:
-#                 local_dict = locals()
-#                 exec(compile(f.read(), self.preference, "exec"),globals(), local_dict)
-#         
-#         
-#         
-#         if self.generate_network:
-#             network = self.generate_network.replace('*','%').replace('?','_').replace(',','|')
-#         else:
-#             network = "%"
-#         if self.generate_station:
-#             station = self.generate_station.replace('*','%').replace('?','_').replace(',','|')
-#         else:
-#             station = "%"
-#         
-#         if self.generate_location:
-#             location = self.generate_location.replace('*','%').replace('?','_').replace(',','|')
-#         else:
-#             location = "%"
-#             
-#         if self.generate_channel:
-#             channel = self.generate_channel.replace('*','%').replace('?','_').replace(',','|')
-#         else:
-#             channel = "%"
-#         
-#         SQL = "SELECT * FROM tickets WHERE (network like '" + network + "' and station like '" + station + "' and location like '"+ location + "' and channel like '"+ channel + "') AND "
-#     
-#         
-#         statusList = list()
-#         for status in ['New','In Progress','Resolved','Closed','Rejected']:
-#             if self.ids['generate_%s_id' % status.replace(' ','_').lower()].state == 'down':
-#                 statusList.append(status)
-#         statusList = "' OR status = '".join(statusList)
-#         
-#         if statusList:
-#             SQL = SQL + "(status = '" + statusList + "') AND "
-# 
-#         trackerList = list()
-#         for tracker in ['Data Problems', 'Support']:
-#             if self.ids['generate_%s_id' % tracker.replace(' ','_').lower()].state == 'down':
-#                 trackerList.append(tracker)
-#         trackerList = "' OR tracker = '".join(trackerList)
-#           
-#         if trackerList:
-#             SQL = SQL + "(tracker = '" + trackerList + "') "      
-# 
-#         
-#         if not self.generate_start == "":
-#             if self.generate_start_after == "down":
-#                 SQL = SQL + " AND (start_date >= '" + self.generate_start + "' OR start_date ='')"
-#                 
-#             else:
-#                 SQL = SQL + " AND (start_date <= '" + self.generate_start + "' OR start_date ='')"
-#         
-#         if not self.generate_end == "":
-#             if self.generate_end_before == "down":
-#                 SQL = SQL + " AND (end_date <= '" + self.generate_end + "' OR end_date ='')"
-#             else:
-#                 SQL = SQL + " AND (end_date >= '" + self.generate_end + "' OR end_date ='')"
-#         
-#         
-#         SQL = SQL + " AND " 
-#         
-#         
-#         if SQL[-4:] == "AND ":
-#             SQL = SQL[:-4]
-# 
-#        
-#         conn = NewTicketScreen.create_connection(NewTicketScreen,database)
-#         selected_tickets = pd.read_sql_query(SQL, conn)
-#         selected_tickets['target'] = selected_tickets['network'] + " " + selected_tickets['station'] + " " + selected_tickets['location'] + " " + selected_tickets['channel']
-#         
-#         conn.close()
-#         
-#         sorted_tickets = selected_tickets[['id','tracker','target','start_date','category','subject','thresholds','images','caption','links','status','end_date','description']]
-#         self.sorted_tickets = sorted_tickets.sort_values(by=['tracker','subject','target','start_date'])
-#         
-#         
-#         if os.path.isfile(self.directory + '/' + self.csv):
-#             self.fileType = self.directory + '/' + self.csv
-#             content = OverwriteDialog(dontDoIt=self.dismiss_popup, doIt=self.remove_file)
-#             masterDict["_popup"] = Popup(title=self.csv, content=content,
-#                             size_hint=(0.9, 0.9))
-#             masterDict["_popup"].open()
-#         else:
-#             try: 
-#                 self.write_csv()
-#             except:
-#                 self.warning_popup("WARNING: Could not create directory %s, is a directory specified?" % self.directory)
-#                 return
-#         
-#         return 1
+
     
     def write_csv(self):
         self.get_generate_inputs()
@@ -1084,13 +972,17 @@ class MainScreen(Screen):
                 except:
                     self.warning_popup("WARNING: Tried to get Start Date from Preference file(since it was left empty),\nbut failed to read Preference File")
                     return
+            if not self.generate_network == "":
+                network = self.generate_network
+            else:
+                network = local_dict['network']
             
             # The network report should be put into the same directory as the csv file even if that differs from the preference)files
 #             dirToUse = os.path.dirname(self.csv)
             dirToUse = self.directory
             print(dirToUse)
 #             self.report_filename = dirToUse + '/' + local_dict['network'] +'_Netops_Report_' + month
-            self.report_filename = local_dict['network'] +'_Netops_Report_' + YYYYmmdd
+            self.report_filename = network +'_Netops_Report_' + YYYYmmdd
 #             self.zipDir = local_dict["directory"] + self.report_filename
             self.zipDir = dirToUse + '/' + self.report_filename
             self.report_fullPath =  self.zipDir +'/' + self.report_filename + '.html' 
@@ -1129,7 +1021,7 @@ class MainScreen(Screen):
 #             dirToUse = os.path.dirname(self.csv)
             dirToUse = self.directory
             
-            self.report_filename = local_dict['network'] +'_Netops_Report_' + YYYYmmdd
+            self.report_filename = network +'_Netops_Report_' + YYYYmmdd
 #             self.zipDir = local_dict["directory"] + self.report_filename
             self.zipDir = dirToUse + '/' + self.report_filename
 
@@ -1183,9 +1075,12 @@ class MainScreen(Screen):
             command = command + ' --preference_file=' + self.preference
         if self.csv:
             command = command + ' --ticketsfile=' + self.directory + '/' + self.csv  
+        if self.generate_network:
+            command = command + ' --network=' + self.generate_network
         command = command + ' --htmldir=' + self.zipDir + ' --html_file_path=' + self.report_fullPath 
         command = command + ' --metrics_file=' + masterDict['metrics_file']
         command = command + ' --thresholds_file=' + masterDict['thresholds_file']
+        print(command)
         os.system(command)
         
         

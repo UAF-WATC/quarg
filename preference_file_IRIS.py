@@ -42,7 +42,7 @@ metricSource = 'IRIS'
 metadataSource = 'IRIS'
 
 ## Thresholds:
-thresholdGroups = ['Completeness', 'State of Health', 'Timing', 'Amplitudes', 'Metadata']
+thresholdGroups = ['Completeness', 'State of Health', 'Metadata', 'Amplitudes', 'Timing']
 
 groupsDict = {'Amplitudes': ['avgSpikes', 'badResp', 'badResp2', 'dcOffsets', 'dead', 'flat', 'gainRatio', 'gainRatioB', 'hiAmp', 'lowAmp', 'lowRms', 'medianUnique', 'nSpikes', 'noise1', 'noise2', 'nonCoher', 'pegged', 'polarity', 'rmsRatio', 'rmsRatio_horiz', 'xTalk'], 'Completeness': ['avgGaps', 'gapsRatioGt12', 'noData'], 'Metadata': ['horDip', 'lowScale', 'nonMSUnits', 'zDip', 'zeroZ'], 'State of Health': ['ampSat', 'clip', 'filtChg', 'glitch', 'padding', 'spikes', 'tSync'], 'Timing': ['noTime', 'poorTQual', 'suspectTime']}
 
@@ -60,9 +60,9 @@ csvfilename = 'tickets.csv'
 csvfile = directory + csvfilename    # file to write tickets to, used to generate report in GENERATE REPORT tab
 
 ## Report Header Information:
-author = "Laura Keyson"
-project = "Testing"
-email = "test@iris.washington.edu"
+author = "Author"
+project = "Project"
+email = "email@email"
 
 
 

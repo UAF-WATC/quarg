@@ -49,15 +49,8 @@ thresholdFile = args.thresholds_file
 preferenceFile = args.preference_file
 
 if not preferenceFile: 
-    quit("Preference File required")
-#     try:
-#         network = args.network
-#         directory = './'+ network +'_reports/'+ network +'/' + month +'/'
-#     except:
-#         quit("Network required if no preference file supplied")
-#     iBroad = 1;    iShort = 1;    iStrong = 1;
-#     
-    
+    quit("WARNING: Preference File required")
+ 
 else:
     try:
         with open(preferenceFile) as f:
@@ -137,12 +130,12 @@ def printPreamble(net,dates,authors,email,outfile):
         #print("Writing Header")
         f.write("<html>\n\n")
         f.write("    <head>\n")
-        f.write("\t<meta name=Title content=\"Data Quality Report for Network " + str(net) + " " + str(' - '. join(dates)) + "\">\n");
+        f.write("\t<meta name=Title content=\"Data Quality Report for Network " + str(', '.join(net.split(','))) + " " + str(' - '. join(dates)) + "\">\n");
         f.write("\t<title>Data Quality Report for Network " + str(net) + " " + str(' - '. join(dates)) + "</title>\n");
         f.write("    </head>\n\n");
 
         f.write("    <body>\n\n");
-        f.write("\t<h1>Data Quality Report for " + str(net) + "</h1>");
+        f.write("\t<h1>Data Quality Report for " + str(', '.join(net.split(','))) + "</h1>");
         f.write("\t<h2>    " + str(' - '. join(dates)) + "</h2>\n\n");
 
         f.write("\t    <i>" + str(authors) + "</i><br>\n");
@@ -325,13 +318,15 @@ def closeHTML():
         f.write("\t    </table>\n");
         f.write("\t    </p>\n");
 
-        f.write("\t    <p><a href=\"http://service.iris.edu/mustang/noise-psd/1\">MUSTANG noise-psd service</a></p>\n");
-        f.write("\t    <p><a href=\"http://service.iris.edu/mustang/noise-pdf/1\">MUSTANG noise-pdf service</a></p>\n");
-        f.write("\t    <p><a href=\"http://service.iris.edu/mustang/noise-mode-timeseries/1\">MUSTANG noise-mode-timeseries service</a></p>\n");
-        f.write("\t    <p><a href=\"http://ds.iris.edu/data_available/\">GOAT/data_available</a></p>\n");
-        f.write("\t    <p><a href=\"http://ds.iris.edu/mda/\">Metadata Aggregator</a></p>\n");
-        f.write("\t    <p><a href=\"http://ds.iris.edu/servlet/budstat/topLevel.do?source=BUD\">Purgatory</a></p>\n");
-        f.write("\t    <p><a href=\"http://ds.iris.edu//SeismiQuery/index.html\">SeismiQuery</a></p>\n");
+        f.write("\t    <p><a href=\"http://service.iris.edu/mustang/noise-psd/1\" target=\"_blank\" >MUSTANG noise-psd service</a></p>\n");
+        f.write("\t    <p><a href=\"http://service.iris.edu/mustang/noise-pdf/1\" target=\"_blank\">MUSTANG noise-pdf service</a></p>\n");
+        f.write("\t    <p><a href=\"http://service.iris.edu/mustang/noise-mode-timeseries/1\" target=\"_blank\">MUSTANG noise-mode-timeseries service</a></p>\n");
+        f.write("\t    <p><a href=\"http://ds.iris.edu/data_available/\" target=\"_blank\">GOAT/data_available</a></p>\n");
+        for net in network.split(','):
+            net = net.strip()
+            f.write("\t    <p><a href=\"http://ds.iris.edu/mda/%s\" target=\"_blank\">Metadata Aggregator for %s</a></p>\n" % (net, net));
+        f.write("\t    <p><a href=\"http://ds.iris.edu/servlet/budstat/topLevel.do?source=BUD\" target=\"_blank\">BUD stats</a></p>\n");
+        f.write("\t    <p><a href=\"http://ds.iris.edu//SeismiQuery/index.html\" target=\"_blank\">SeismiQuery</a></p>\n");
 
 
         # Loop over the thresholds dictionary to print the definitions for instrument groups that are being used.
