@@ -25,6 +25,12 @@ Users have the ability to customize QuARG to adapt to their particular network. 
 
 This utility guides users through the process of generating a list of potential issues, examining and tracking issues, and generating a report.  
 
+An example report:
+<p align="center">
+<img src="https://github.com/iris-edu/quarg/blob/main/docs/figures/ExampleReport.png" width="500">
+</p>
+
+
 For more detailed documentation, see https://iris-edu.github.io/quarg/
 <br /> 
 
