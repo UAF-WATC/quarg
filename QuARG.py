@@ -1540,7 +1540,7 @@ class PreferencesScreen(Screen):
                 masterDict['groups_and_names'].sort()         
         
             except:
-                self.warning_popup("WARNING: Unable to load file")
+                self.warning_popup(self, "WARNING: Unable to load file")
         else:
             self.warning_popup("WARNING: Preference File not found")
                 
