@@ -1,0 +1,12 @@
+id,tracker,target,start_date,category,subject,thresholds,images,caption,links,status,end_date,description
+43,Data Problems,AK E18K EP BDF,2020-11-23,Completeness,Gaps,"gapsRatioGt12, avgGaps",/Users/ken/quarg/quarg_plots/ak/E18K_BDF.png,Waveform showing gaps,,New,,Channel has gaps and outages during the bulk of the reporting period. Individual segments have slightly different sample rates
+45,Data Problems,AK I21K EP BDF,2020-11-23,Completeness,Gaps,"avgGaps, gapsRatioGt12",/Users/ken/quarg/quarg_plots/ak/I21K_BDF.png,Waveform showing gaps,,New,,"Channel was gappy during the reporting period. Also, slightly different sampling rates on the segments."
+46,Data Problems,AK M19K EP BDF,2020-11-23,Completeness,Gaps,"avgGaps, gapsRatioGt12",/Users/ken/quarg/quarg_plots/ak/M19K_BDF.png,Waveform illustrating gaps,,New,,Gaps during the reporting period
+44,Data Problems,AK E24K EP BDF,2020-11-23,Completeness,Gaps ,"avgGaps, gapsRatioGt12",/Users/ken/quarg/quarg_plots/ak/E24K_BDF.png,Gaps at E24K,,New,,"There were gaps on E24K. Also, different data segments were coming in with slightly different sampling rates."
+47,Data Problems,AK COLD EP BDF,2020-11-23,Completeness,Outage,noData,,,,New,,This channel was out for the entire reporting period
+48,Data Problems,AK E22K EP BDF,2020-11-23,Completeness,Outage,noData,,,,New,,This channel was out for the entire reporting period
+49,Data Problems,AK E25K EP BDF,2020-11-23,Completeness,Outage,noData,,,,New,,This channel was out for the entire reporting period
+50,Data Problems,AK H23K EP BDF,2020-11-23,Completeness,Outage,noData,,,,New,,This channel was out for the entire reporting period
+51,Data Problems,AK O18K EP BDF,2020-11-23,Completeness,Outage,noData,,,,New,,This channel was out for the entire reporting period
+52,Data Problems,AK R18K EP BDF,2020-11-23,Completeness,Outage,noData,,,,New,,This channel was out for the entire reporting period
+53,Data Problems,AK SSN EP BDF,2020-11-23,Completeness,Outage,noData,,,,New,,This channel was out for the entire reporting period

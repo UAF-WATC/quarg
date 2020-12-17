@@ -380,6 +380,11 @@ def parse_XML(xml_file, df_cols):
                                     if field == 'SampleRate':
                                         thisSampleRate = fieldNode.text
 #                                         print(thisSampleRate)
+                                # Clean this up for infrasound channels (KAM)
+                                if thisChannel in ('BDF, HDF, CDF'):
+                                    thisAzimuth = np.nan
+                                    thisDip = np.nan
+
                                                 
                                 if field == "Response":
                                     for subFieldNode in fieldNode:
@@ -546,6 +551,9 @@ def sortMetaFile(issueDF, threshold):
     
     if len(issueDF) > 0:
         for ind, row in issueDF.iterrows():
+            # This was causing a crash for  - KAM
+            if row['starttime'].endswith('.000000Z'):
+                row['starttime'] = row['starttime'][:-8]
             start = datetime.datetime.strptime(row['starttime'], '%Y-%m-%dT%H:%M:%S').date()
             if pd.isnull(row['endtime']):
                 end = datetime.datetime.now().date()

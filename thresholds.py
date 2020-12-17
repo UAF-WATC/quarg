@@ -1194,6 +1194,9 @@ def do_threshold(threshold, thresholdFile, metricDF, metaDF, outfile, instrument
                                     for index, row in chanMetaDF.iterrows():
                                         # The metadata dataframe will never have complex targets in it, so I need to allow for those
                                         complexTarget = "%s\.%s\..*%s.*\..*%s.*\.." % (row['network'], row['station'], row['location'], row['channel'])
+                                        # This was causing a crash for me - KAM
+                                        if row['starttime'].endswith('.000000Z'):
+                                            row['starttime'] = row['starttime'][:-8]
                                         starttime = datetime.datetime.strptime(row['starttime'], '%Y-%m-%dT%H:%M:%S')
                                         if pd.isnull(row['endtime']):
                                             endtime = datetime.datetime.now()

@@ -14,6 +14,7 @@ event_end
 event_in_progress
 feed_latency
 glitches
+gsn_timing
 max_gap
 max_overlap
 max_range
