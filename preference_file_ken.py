@@ -41,8 +41,8 @@ reportFrequency = 'Weekly'
 # Metric source: either 'IRIS' or the path to the local sqlite database file that ISPAQ generated
 #metricSource = 'IRIS'
 #metadataSource = 'IRIS'
-metricSource = '/home/dq/ispaq/ispaq.db'
-metadataSource = '/home/dq/quarg/all.xml' 
+metricSource = '/Users/ken/quarg/ispaq.db'
+metadataSource = '/Users/ken/quarg/all_20201221_quarg.xml' 
 #metadataSource = '/Users/ken/quarg/ELK.xml'
 
 ## Thresholds:
