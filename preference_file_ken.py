@@ -42,7 +42,7 @@ reportFrequency = 'Weekly'
 #metricSource = 'IRIS'
 #metadataSource = 'IRIS'
 metricSource = '/Users/ken/quarg/ispaq.db'
-metadataSource = '/Users/ken/quarg/all_20201221_quarg.xml' 
+metadataSource = '/Users/ken/quarg/all_20210120_quarg.xml' 
 #metadataSource = '/Users/ken/quarg/ELK.xml'
 
 ## Thresholds:
