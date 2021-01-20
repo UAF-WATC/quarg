@@ -49,7 +49,7 @@ metadataSource = '/Users/ken/quarg/all_20210120_quarg.xml'
 thresholdGroups = ['Completeness','Amplitudes', 'Metadata']
 ##thresholdGroups = ['Completeness', 'State of Health', 'Timing', 'Amplitudes', 'Metadata']
 
-groupsDict = {'Completeness': ['avgGaps', 'gapsRatioGt12', 'noData'], 'Amplitudes': ['noise1', 'noise2', 'hiAmp', 'lowAmp', 'flat', 'nSpikes', 'avgSpikes', 'lowRms', 'badResp', 'badResp2', 'pegged', 'dead'], 'Metadata': ['horDip', 'lowScale', 'nonMSUnits', 'zDip', 'zeroZ']}
+groupsDict = {'Completeness': ['avgGaps', 'gapsRatioGt12', 'noData'], 'Amplitudes': ['noise1', 'noise2', 'hiAmp', 'lowAmp', 'flat', 'nSpikes', 'avgSpikes', 'lowRms', 'badResp', 'badResp2', 'pegged', 'dead', 'xTalk', 'polarity'], 'Metadata': ['horDip', 'lowScale', 'nonMSUnits', 'zDip', 'zeroZ']}
 
 ##groupsDict = {'Amplitudes': ['avgSpikes', 'badResp', 'badResp2', 'dcOffsets', 'dead', 'flat', 'gainRatio', 'gainRatioB', 'hiAmp', 'lowAmp', 'lowRms', 'medianUnique', 'nSpikes', 'noise1', 'noise2', 'nonCoher', 'pegged', 'polarity', 'rmsRatio', 'rmsRatio_horiz', 'xTalk'], 'Completeness': ['avgGaps', 'gapsRatioGt12', 'noData'], 'Metadata': ['horDip', 'lowScale', 'nonMSUnits', 'zDip', 'zeroZ'], 'State of Health': ['ampSat', 'clip', 'filtChg', 'glitch', 'padding', 'spikes', 'tSync'], 'Timing': ['noTime', 'poorTQual', 'suspectTime']}
 
