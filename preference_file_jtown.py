@@ -46,7 +46,7 @@ reportFrequency = 'Weekly'
 #metadataSource = '/home/dq/quarg/all.xml' 
 
 metricSource = '/Users/jrcoffey/git/ispaq/ispaq.db'
-metadataSource = '/Users/jrcoffey/git/quarg/all_20210120_quarg.xml'
+metadataSource = '/Users/jrcoffey/git/quarg/all_20210205_quarg.xml'
 
 #metadataSource = '/Users/ken/quarg/ELK.xml'
 
