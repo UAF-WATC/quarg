@@ -381,7 +381,7 @@ def parse_XML(xml_file, df_cols):
                                         thisSampleRate = fieldNode.text
 #                                         print(thisSampleRate)
                                 # Clean this up for infrasound channels (KAM)
-                                if thisChannel in ('BDF, HDF, CDF'):
+                                if thisChannel in ('BDF, HDF, CDF', 'LWS', 'LWD', 'LKO'):
                                     thisAzimuth = np.nan
                                     thisDip = np.nan
 

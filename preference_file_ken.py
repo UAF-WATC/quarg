@@ -27,10 +27,10 @@ import reportUtils
 network = 'AV,BK,HQ,II,IM,IU,US'
 station = '*'
 location = '*'
-channels = 'BH?,HH?,SH?,?DF'
+channels = 'BH?,HH?,SH?,?DF,LW?,LKO'
 
 #instruments = ['broadband']
-instruments = ['strongmotion', 'short period', 'broadband', 'infrasound']
+instruments = ['strongmotion', 'short period', 'broadband', 'infrasound', 'weather']
 chanTypes = {'H': ('1', '2', 'E', 'N'), 'V': ('3', 'Z')}
 
 
@@ -42,7 +42,7 @@ reportFrequency = 'Weekly'
 #metricSource = 'IRIS'
 #metadataSource = 'IRIS'
 metricSource = '/Users/ken/quarg/ispaq.db'
-metadataSource = '/Users/ken/quarg/all_20210205_quarg.xml' 
+metadataSource = '/Users/ken/quarg/all_20210215_quarg.xml' 
 #metadataSource = '/Users/ken/quarg/ELK.xml'
 
 ## Thresholds:
