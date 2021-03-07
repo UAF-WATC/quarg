@@ -57,3 +57,4 @@ ts_num_gaps
 ts_num_gaps_total
 ts_percent_availability
 ts_percent_availability_total
+array_rms
